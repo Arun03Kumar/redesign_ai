@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const Layout = ({children}: any) => {
+const Layout = ({ children }: any) => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [currentPos, setCurrentPos] = useState({ x: 0, y: 0 });
 

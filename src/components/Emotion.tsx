@@ -1,9 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import robotImage from "../assets/robot.png";
-import { FaArrowRight, FaUndoAlt  } from "react-icons/fa"; // Path to your robot image
+import { FaArrowRight, FaUndoAlt } from "react-icons/fa"; // Path to your robot image
 import "./stylesheets/HowPage.css";
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate, useLocation } from "react-router-dom";
 
 const slides = [
   {
@@ -18,8 +17,7 @@ const slides = [
   },
   {
     media: "/emotion3.png",
-    narration:
-      "So I'll give him more such content.",
+    narration: "So I'll give him more such content.",
   },
   {
     media: "/emotion4.png",
@@ -31,26 +29,105 @@ const slides = [
     narration:
       "what he is feeling is negative emotions, comparisons and self doubt which will took his motivation and make him depressed, but I don't care I only know what he is spenting more time on.",
   },
-  
+];
+
+const quizzes = [
+  {
+    question: "What does the AI actually measure to decide what to show you?",
+    options: [
+      { id: "A", text: "Your happiness" },
+      { id: "B", text: "Your emotions" },
+      { id: "C", text: "Your friends’ reactions" },
+      { id: "D", text: "Your actions like pause, like, or zoom" },
+    ],
+    correct: "D",
+    explanation:
+      "The AI doesn’t feel; it measures your behavior like pausing, liking, or zooming to predict interest.",
+  },
+  {
+    question: "What made the AI think Alex wants more travel content?",
+    options: [
+      { id: "A", text: "He booked a flight" },
+      { id: "B", text: "He liked his friend’s photo" },
+      { id: "C", text: "He spent time looking at a travel post" },
+      { id: "D", text: "He commented on a meme" },
+    ],
+    correct: "C",
+    explanation:
+      "The AI noticed that Alex spent time looking at a travel post, so it assumed interest.",
+  },
+  {
+    question: "What kind of content did the AI start showing after that?",
+    options: [
+      { id: "A", text: "Cooking videos" },
+      { id: "B", text: "More travel and vacation content" },
+      { id: "C", text: "Study tutorials" },
+      { id: "D", text: "Local news" },
+    ],
+    correct: "B",
+    explanation:
+      "The AI kept giving more travel content based on Alex’s earlier interest.",
+  },
+  {
+    question: "How did this content make Alex feel?",
+    options: [
+      { id: "A", text: "Inspired and motivated" },
+      { id: "B", text: "Bored and tired" },
+      { id: "C", text: "Jealous and left out" },
+      { id: "D", text: "Happy and excited" },
+    ],
+    correct: "C",
+    explanation:
+      "Alex started feeling negative emotions, thinking everyone else was having more fun.",
+  },
+  {
+    question: "Why doesn’t the AI care about Alex’s feelings?",
+    options: [
+      { id: "A", text: "Because it doesn't understand human language" },
+      { id: "B", text: "Because it only cares about what keeps Alex engaged" },
+      { id: "C", text: "Because Alex is not popular" },
+      { id: "D", text: "Because it is still learning" },
+    ],
+    correct: "B",
+    explanation:
+      "The AI focuses only on engagement — what you spend time on — not how it affects your feelings.",
+  },
 ];
 
 const Emotion = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const navigate = useNavigate();
+  const location = useLocation();
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % slides.length); // Loop back to the first slide when the last one is reached
   };
 
   // Handle previous slide (left arrow)
-//   const prevSlide = () => {
-//     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length); // Loop back to the last slide when the first one is reached
-//   };
+  //   const prevSlide = () => {
+  //     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length); // Loop back to the last slide when the first one is reached
+  //   };
 
   const isVideo = slides[currentSlide].media.endsWith(".mp4");
   const isLastSlide = currentSlide === slides.length - 1;
 
+  useEffect(() => {
+    if (location.state?.goToLastSlide) {
+      setCurrentSlide(slides.length - 1);
+    }
+  }, [location.state]);
+
   const goNextPage = () => {
     navigate("/emotion"); // 👈 change this to your actual next route
+  };
+  const handleStartQuiz = () => {
+    navigate("/quiz1", {
+      state: {
+        quizData: {
+          quizzes: quizzes,
+          redirectLink: "/emotion", // where to go after completion
+        },
+      },
+    });
   };
   return (
     <div className="glass-content">
@@ -85,6 +162,9 @@ const Emotion = () => {
               </button>
               <button className="next-button" onClick={goNextPage}>
                 Next
+              </button>
+              <button className="next-button quiz" onClick={handleStartQuiz}>
+                Quiz
               </button>
             </div>
           ) : (
