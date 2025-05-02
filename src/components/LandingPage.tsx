@@ -11,7 +11,7 @@ const LandingPage = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isSlid, setIsSlid] = useState(false);
   // const [isPlaying2, setIsPlaying2] = useState(true);
-  const audioRef2 = useRef(null);
+  // const audioRef2 = useRef(null);
 
   const handleSlide = () => {
     setIsSlid(!isSlid);
@@ -73,14 +73,14 @@ const LandingPage = () => {
   //   }
   // };
 
-  useEffect(() => {
-    // Initialize the audio to automatically play if autoplay is enabled
-    if (audioRef2.current) {
-      audioRef2?.current?.play().catch((error:any) => {
-        console.log(error, "Autoplay prevented, user interaction required");
-      });
-    }
-  }, []);
+  // useEffect(() => {
+  //   // Initialize the audio to automatically play if autoplay is enabled
+  //   if (audioRef2.current) {
+  //     audioRef2?.current?.play().catch((error:any) => {
+  //       console.log(error, "Autoplay prevented, user interaction required");
+  //     });
+  //   }
+  // }, []);
 
   const handleHowClick = () => {
     navigate('/how'); // Navigate to /how when the button is clicked

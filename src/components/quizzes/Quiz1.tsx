@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import '../stylesheets/quiz1.css'; // Create this CSS file
 import { useNavigate, useLocation } from 'react-router-dom';
 
