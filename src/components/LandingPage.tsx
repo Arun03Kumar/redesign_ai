@@ -10,7 +10,7 @@ const LandingPage = () => {
   const [isPlaying, setIsPlaying] = useState(true);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isSlid, setIsSlid] = useState(false);
-  const [isPlaying2, setIsPlaying2] = useState(true);
+  // const [isPlaying2, setIsPlaying2] = useState(true);
   const audioRef2 = useRef(null);
 
   const handleSlide = () => {
@@ -32,7 +32,7 @@ const LandingPage = () => {
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.play().catch((error) => {
-        console.log("Autoplay prevented, user interaction required");
+        console.log(error, "Autoplay prevented, user interaction required");
       });
     }
   }, []);
@@ -62,22 +62,22 @@ const LandingPage = () => {
 //     return () => cancelAnimationFrame(animationFrame);
 //   }, [mousePosition]);
 
-  const handlePlayPause2 = () => {
-    if (audioRef2.current) {
-      if (isPlaying2) {
-        audioRef2.current.pause(); // Pause the audio if it's playing
-      } else {
-        audioRef2.current.play(); // Play the audio if it's paused
-      }
-      setIsPlaying2(!isPlaying2); // Toggle the play/pause state
-    }
-  };
+  // const handlePlayPause2 = () => {
+  //   if (audioRef2.current) {
+  //     if (isPlaying2) {
+  //       audioRef2.current.pause(); // Pause the audio if it's playing
+  //     } else {
+  //       audioRef2.current.play(); // Play the audio if it's paused
+  //     }
+  //     setIsPlaying2(!isPlaying2); // Toggle the play/pause state
+  //   }
+  // };
 
   useEffect(() => {
     // Initialize the audio to automatically play if autoplay is enabled
     if (audioRef2.current) {
-      audioRef2.current.play().catch((error) => {
-        console.log("Autoplay prevented, user interaction required");
+      audioRef2?.current?.play().catch((error:any) => {
+        console.log(error, "Autoplay prevented, user interaction required");
       });
     }
   }, []);

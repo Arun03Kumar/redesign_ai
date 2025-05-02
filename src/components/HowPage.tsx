@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import robotImage from "../assets/robot.png";
 import { FaArrowRight, FaUndoAlt  } from "react-icons/fa"; // Path to your robot image
 import "./stylesheets/HowPage.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation  } from "react-router-dom";
 
 
 const slides = [
@@ -44,16 +44,26 @@ const slides = [
 ];
 
 const HowPage = () => {
+  const location = useLocation();
   const [currentSlide, setCurrentSlide] = useState(0);
+  // const [currentSlide, setCurrentSlide] = useState(
+  //   location.state?.initialSlide || 0
+  // );
   const navigate = useNavigate();
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % slides.length); // Loop back to the first slide when the last one is reached
   };
 
+  useEffect(() => {
+    if (location.state?.goToLastSlide) {
+      setCurrentSlide(slides.length - 1);
+    }
+  }, [location.state]);
+
   // Handle previous slide (left arrow)
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length); // Loop back to the last slide when the first one is reached
-  };
+  // const prevSlide = () => {
+  //   setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length); // Loop back to the last slide when the first one is reached
+  // };
 
   const isVideo = slides[currentSlide].media.endsWith(".mp4");
   const isLastSlide = currentSlide === slides.length - 1;
@@ -95,6 +105,7 @@ const HowPage = () => {
               <button className="next-button" onClick={goNextPage}>
                 Next
               </button>
+              <button onClick={() => navigate("/quiz1", { state: { resetQuiz: true } })}>Quiz</button>
             </div>
           ) : (
             // Arrow for normal slides

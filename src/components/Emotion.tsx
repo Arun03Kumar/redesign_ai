@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import robotImage from "../assets/robot.png";
 import { FaArrowRight, FaUndoAlt  } from "react-icons/fa"; // Path to your robot image
 import "./stylesheets/HowPage.css";
@@ -7,34 +7,34 @@ import { useNavigate } from "react-router-dom";
 
 const slides = [
   {
-    media: "/happy_alex.mp4", // Video or Image path
+    media: "/emotion1.mp4", // Video or Image path
     narration:
-      "My job is to keep you happy. That's it. If you like cats and BGMI, I’ll make sure that’s all you see.",
+      "I don’t feel emotions. I just measure time. If you pause, like, or zoom — I assume you want more.",
   },
   {
-    media: "/explore.png",
+    media: "/emotion2.png",
     narration:
-      "Sure, I could show him tutorials, inventions, or cool facts.",
+      "Alex watching his friend's post that he is traveling, so he took some time to look into it, but I think that he is interested into more like this content",
   },
   {
-    media: "/hook.mp4",
+    media: "/emotion3.png",
     narration:
-      "But I only showing him what he likes so he spents more time with me.",
+      "So I'll give him more such content.",
   },
   {
-    media: "/bubble.mp4",
+    media: "/emotion4.png",
     narration:
-      "This is called filter bubble, so he can only see what's inside the bubble",
+      "He is now thinking that everyone around him having more fun than him and he just sitting in his room.",
   },
   {
-    media: "/outside_world.png",
+    media: "/emotion5.png",
     narration:
-      "you can see there's a lot to learn and more fun in outside world but I'll make sure that you won't come out of filter bubble because you are my fuel",
+      "what he is feeling is negative emotions, comparisons and self doubt which will took his motivation and make him depressed, but I don't care I only know what he is spenting more time on.",
   },
   
 ];
 
-const Filter_bubble = () => {
+const Emotion = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const navigate = useNavigate();
   const nextSlide = () => {
@@ -42,15 +42,15 @@ const Filter_bubble = () => {
   };
 
   // Handle previous slide (left arrow)
-//   const prevSlide = () => {
-//     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length); // Loop back to the last slide when the first one is reached
-//   };
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length); // Loop back to the last slide when the first one is reached
+  };
 
   const isVideo = slides[currentSlide].media.endsWith(".mp4");
   const isLastSlide = currentSlide === slides.length - 1;
 
   const goNextPage = () => {
-    navigate("/product_buy"); // 👈 change this to your actual next route
+    navigate("/emotion"); // 👈 change this to your actual next route
   };
   return (
     <div className="glass-content">
@@ -99,4 +99,4 @@ const Filter_bubble = () => {
   );
 };
 
-export default Filter_bubble;
+export default Emotion;

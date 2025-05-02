@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import robotImage from "../assets/robot.png";
 import { FaArrowRight, FaUndoAlt  } from "react-icons/fa"; // Path to your robot image
 import "./stylesheets/HowPage.css";
@@ -42,15 +42,15 @@ const Product_buy = () => {
   };
 
   // Handle previous slide (left arrow)
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length); // Loop back to the last slide when the first one is reached
-  };
+//   const prevSlide = () => {
+//     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length); // Loop back to the last slide when the first one is reached
+//   };
 
   const isVideo = slides[currentSlide].media.endsWith(".mp4");
   const isLastSlide = currentSlide === slides.length - 1;
 
   const goNextPage = () => {
-    navigate("/product_buy"); // 👈 change this to your actual next route
+    navigate("/emotion"); // 👈 change this to your actual next route
   };
   return (
     <div className="glass-content">
