@@ -7,7 +7,7 @@ import Layout from './components/Layout';
 import Filter_bubble from './components/Filter_bubble';
 import Product_buy from './components/Product_buy';
 import Emotion from './components/Emotion';
-import Quiz1 from './components/quizzes/quiz1';
+import Quiz1 from './components/quizzes/Quiz1';
 
 function App() {
   const location = useLocation(); // Access the current route location
