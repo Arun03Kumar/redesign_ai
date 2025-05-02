@@ -20,7 +20,7 @@ const Quiz1 = () => {
     }
   }, [location.state]);
 
-  const current =
+  const current:any =
     quizzesData.quizzes.length > 0 ? quizzesData.quizzes[currentQuiz] : null;
 
   useEffect(() => {
