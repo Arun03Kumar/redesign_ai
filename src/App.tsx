@@ -8,6 +8,8 @@ import Filter_bubble from "./components/Filter_bubble";
 import Product_buy from "./components/Product_buy";
 import Emotion from "./components/Emotion";
 import Quiz1 from "./components/quizzes/Quiz1";
+import Cats from "./components/games/Cats";
+import FilterBubble from "./components/games/Bubble/FilterBubble";
 
 function App() {
   const location = useLocation(); // Access the current route location
@@ -94,6 +96,8 @@ function App() {
               </motion.div>
             }
           />
+          <Route path="/game/cats" element={<Cats />} />
+          <Route path="/game/filter_bubble" element={<FilterBubble />} />
         </Routes>
       </AnimatePresence>
     </Layout>
