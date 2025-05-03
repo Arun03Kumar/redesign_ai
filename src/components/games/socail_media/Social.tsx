@@ -152,7 +152,7 @@ function DraggableItem({ item, draggable = true, type, isSelected }: any) {
 
   return (
     <div
-      ref={(node) => dragRef(node)}
+      ref={(node) => {dragRef(node)}}
       className={`w-22 h-22 ${
         isSelected ? "bg-green-200" : "bg-gray-100"
       } hover:bg-gray-200 rounded-lg flex items-center justify-center shadow-md cursor-${
@@ -303,7 +303,7 @@ function DropPhone({
       className="w-64 h-[480px] border-4 border-black rounded-[2rem] bg-white relative"
     >
       <div className="absolute top-2 left-1/2 transform -translate-x-1/2 h-4 w-24 bg-gray-300 rounded-full"></div>
-      <div ref={(node) => drop(node)} className="absolute inset-0">
+      <div ref={(node) => {drop(node)}} className="absolute inset-0">
         {items.map((item: any) => (
           <DraggablePlacedItem
             key={item.uuid}
