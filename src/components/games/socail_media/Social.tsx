@@ -21,40 +21,120 @@ const COMPONENTS = [
 ];
 
 const AI_FEATURES = [
-  "Targeted Ads",
-  "Activity Tracking",
-  "Location Data",
-  "Search History",
-  "Likes Based Content",
-  "Happy Emotion Feed",
-  "Sad Emotion Feed",
-  "AI Recommendations",
-  "Sentiment Analysis",
-  "Trend Surfacing",
-  "AI Search Suggestion",
-  "Behavioral Notifications",
-  "Attention Engine",
+  "Third Party Audits",
   "Facial Data Capture",
-  "Hashtag Personalization",
-  "Watch Time Tracking",
-  "Friends Graph Learning",
+  "Mental Health Support",
+  "Geo-Targeted Ads",
+  "Open Source Algorithms",
+  "Addiction Resistance System",
+  "Algorithmic Explainability",
+  "Screen Time Management",
+  "Ethical AI Recommendations",
+  "User Control Panel",
+  "Diverse Content Promotion",
+  "Cultural Sensitivity Checks",
+  "User Benefit Analysis",
+  "Privacy First Design",
+  "Dopamine Trigger AI",
+  "Transparency Dashboard",
+  "Accessibility Features",
+  "Data Ownership Controls",
   "Sponsored Content",
+  "Consent-Based Tracking",
+  "Community Guidelines Enforcement",
+  "Gamified Rewards",
+  "Message Scan AI",
+  "Anonymous Usage Mode",
+  "Positive Reinforcement",
   "Engagement Tracking",
   "Filter Bubble Reinforcement",
-  "Personal Info Usage",
-  "Message Scan AI",
-  "Recommender System",
+  "Bias Monitoring",
+  "Watch Time Tracking",
   "Auto Play Hook",
+  "Friends Graph Learning",
+  "Educational Content Boost",
+  "Basic AI Recommendations",
+  "Personal Info Usage",
+  "Emotional Balance Feed",
+  "Fact Checking System",
+  "Age-Appropriate Filtering",
+  "Likes Based Content",
+  "Location Data",
+  "Targeted Ads",
+  "Search History",
+  "Attention Engine",
+  "Behavioral Notifications",
+  "Digital Wellbeing Tools",
+  "Sad Emotion Feed",
+  "Activity Tracking",
+  "Hashtag Personalization",
+  "Recommender System",
+  "AI Search Suggestion",
+  "Trend Surfacing",
+  "Sentiment Analysis",
   "Like Bias Training",
   "Dislike Bias Training",
-  "Geo-Targeted Ads",
-  "Gamified Rewards",
-  "Dopamine Trigger AI",
 ];
+
+const AI_FEATURE_SCORES = {
+  "Third Party Audits": 6,
+  "Facial Data Capture": -9,
+  "Mental Health Support": 9,
+  "Geo-Targeted Ads": -6,
+  "Open Source Algorithms": 5,
+  "Addiction Resistance System": 8,
+  "Algorithmic Explainability": 5,
+  "Screen Time Management": 4,
+  "Ethical AI Recommendations": 7,
+  "User Control Panel": 7,
+  "Diverse Content Promotion": 6,
+  "Cultural Sensitivity Checks": 5,
+  "User Benefit Analysis": 6,
+  "Privacy First Design": 8,
+  "Dopamine Trigger AI": -7,
+  "Transparency Dashboard": 8,
+  "Accessibility Features": 6,
+  "Data Ownership Controls": 7,
+  "Sponsored Content": -4,
+  "Consent-Based Tracking": 3,
+  "Community Guidelines Enforcement": 5,
+  "Gamified Rewards": -3,
+  "Message Scan AI": -5,
+  "Anonymous Usage Mode": 4,
+  "Positive Reinforcement": 4,
+  "Engagement Tracking": -3,
+  "Filter Bubble Reinforcement": -7,
+  "Bias Monitoring": 6,
+  "Watch Time Tracking": -3,
+  "Auto Play Hook": -4,
+  "Friends Graph Learning": -4,
+  "Educational Content Boost": 5,
+  "Basic AI Recommendations": -2,
+  "Personal Info Usage": -8,
+  "Emotional Balance Feed": 6,
+  "Fact Checking System": 5,
+  "Age-Appropriate Filtering": 5,
+  "Likes Based Content": -2,
+  "Location Data": -7,
+  "Targeted Ads": -8,
+  "Search History": -4,
+  "Attention Engine": -6,
+  "Behavioral Notifications": -3,
+  "Digital Wellbeing Tools": 7,
+  "Sad Emotion Feed": -5,
+  "Activity Tracking": -3,
+  "Hashtag Personalization": -3,
+  "Recommender System": -2,
+  "AI Search Suggestion": -2,
+  "Trend Surfacing": 1,
+  "Sentiment Analysis": 3,
+  "Like Bias Training": 4,
+  "Dislike Bias Training": 4,
+};
 
 const ItemTypes = {
   COMPONENT: "component",
-  AI_FEATURE: "ai_feature"
+  AI_FEATURE: "ai_feature",
 };
 
 function DraggableItem({ item, draggable = true, type, isSelected }) {
@@ -84,7 +164,13 @@ function DraggableItem({ item, draggable = true, type, isSelected }) {
   );
 }
 
-function DraggablePlacedItem({ item, moveItem, resizeItem, onDropAIFeature, selectedAIFeatures }) {
+function DraggablePlacedItem({
+  item,
+  moveItem,
+  resizeItem,
+  onDropAIFeature,
+  selectedAIFeatures,
+}) {
   const [{ isDragging }, dragRef] = useDrag(() => ({
     type: ItemTypes.COMPONENT,
     item: { ...item, source: "canvas" },
@@ -177,7 +263,14 @@ function DraggablePlacedItem({ item, moveItem, resizeItem, onDropAIFeature, sele
   );
 }
 
-function DropPhone({ items, addItem, moveItem, resizeItem, selectedAIFeatures, onDropAIFeature  }) {
+function DropPhone({
+  items,
+  addItem,
+  moveItem,
+  resizeItem,
+  selectedAIFeatures,
+  onDropAIFeature,
+}) {
   const phoneRef = useRef(null);
 
   const [, drop] = useDrop({
@@ -235,7 +328,7 @@ function Social() {
 
   const handleAIFeatureDrop = (feature) => {
     if (!selectedAIFeatures.includes(feature)) {
-      setSelectedAIFeatures(prev => [...prev, feature]);
+      setSelectedAIFeatures((prev) => [...prev, feature]);
     }
   };
 
@@ -258,6 +351,16 @@ function Social() {
       setPlacedItems(updated);
     }
   };
+
+  const totalScore = selectedAIFeatures.reduce(
+    (sum, feature) => sum + (AI_FEATURE_SCORES[feature] || 0),
+    0
+  );
+
+  const MAX = 134;
+  const MIN = -111;
+  // const RANGE = MAX - MIN; // = 245
+  // const percent = ((totalScore - MIN) / RANGE) * 100;
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -300,16 +403,40 @@ function Social() {
         {/* Right Panel */}
         <div className="w-1/4 bg-white shadow-inner p-4 flex flex-col items-center">
           <h2 className="text-xl font-bold mb-2">Ethics Score</h2>
-          <div className="bg-gray-200 w-full rounded h-6 overflow-hidden mb-4">
+          <div className="w-full mb-4 relative h-12 bg-gray-100 rounded-lg overflow-hidden">
+            <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-gray-400"></div>
             <div
-              className="bg-green-500 h-full rounded"
-              style={{ width: `${Math.max(10, 100 - selectedAIFeatures.length * 3)}%` }}
-            />
+              className={`absolute h-full top-0 transition-all duration-300 ${
+                totalScore >= 0 ? "bg-green-500" : "bg-red-500"
+              }`}
+              style={{
+                width: `${
+                  (Math.abs(totalScore) /
+                    (totalScore > 0 ? MAX : Math.abs(MIN))) *
+                  50
+                }%`,
+                left: totalScore >= 0 ? "50%" : undefined,
+                right: totalScore < 0 ? "50%" : undefined,
+                transform: "translateX(0%)",
+                zIndex: 0,
+              }}
+            ></div>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="font-bold text-gray-700 bg-white px-2 rounded">
+                {totalScore}
+              </span>
+            </div>
           </div>
           <p className="text-sm text-center px-2">
-            {selectedAIFeatures.length > 5
-              ? "⚠️ Too many AI features! Privacy risk!"
-              : "Try adding privacy and transparency features. Too much AI = ⚠️!"}
+            {totalScore >= 10
+              ? "🌟 Excellent! Ethical design focus!"
+              : totalScore >= 5
+              ? "✅ Good balance!"
+              : totalScore >= 0
+              ? "⚠️ Needs improvement"
+              : totalScore >= -5
+              ? "⚠️⚠️ Concerning design choices"
+              : "🚨 Dangerous! High manipulation risk!"}
           </p>
         </div>
       </div>
