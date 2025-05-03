@@ -1,8 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+// import "./Layout.css"; // Ensure this line exists and points to the CSS file
 
 const Layout = ({ children }: any) => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [currentPos, setCurrentPos] = useState({ x: 0, y: 0 });
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
@@ -10,10 +13,7 @@ const Layout = ({ children }: any) => {
     };
 
     window.addEventListener("mousemove", handleMouseMove);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
+    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
   useEffect(() => {
@@ -24,10 +24,22 @@ const Layout = ({ children }: any) => {
       }));
       requestAnimationFrame(move);
     };
-
     const animationFrame = requestAnimationFrame(move);
     return () => cancelAnimationFrame(animationFrame);
   }, [mousePosition]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setMenuOpen(false);
+      }
+    };
+    if (menuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [menuOpen]);
+
   return (
     <div className="container">
       <div className="gradient-bg">
@@ -63,7 +75,23 @@ const Layout = ({ children }: any) => {
           ></div>
         </div>
       </div>
+
       <div>{children}</div>
+
+      {/* Floating Button & Menu */}
+      <div className="fab-container">
+        <button
+          className="fab-button"
+          onClick={() => setMenuOpen((prev) => !prev)}
+        >
+          ☰
+        </button>
+        <div ref={menuRef} className={`fab-menu ${menuOpen ? "open" : ""}`}>
+          <a href="/game/cats">Interactive App 1</a>
+          <a href="/game/filter_bubble">Filter Bubble</a>
+          <a href="/game/social_media">Redesign Social App</a>
+        </div>
+      </div>
     </div>
   );
 };

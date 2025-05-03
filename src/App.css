@@ -711,3 +711,62 @@ body {
 .play-pause-button:focus {
   outline: none; /* Remove focus outline */
 }
+
+.fab-container {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  z-index: 9999;
+}
+
+.fab-button {
+  width: 56px;
+  height: 56px;
+  background-color: #2563eb;
+  color: white;
+  font-size: 24px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.2s ease;
+  padding-top: 10px;
+}
+
+.fab-button:hover {
+  background-color: #1e40af;
+}
+
+.fab-menu {
+  margin-top: 12px;
+  padding: 12px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transform: scale(0.95);
+  transform-origin: bottom left;
+  transition: all 0.3s ease;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fab-menu.open {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.fab-menu a {
+  text-decoration: none;
+  color: #2563eb;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.fab-menu a:hover {
+  text-decoration: underline;
+}
+
