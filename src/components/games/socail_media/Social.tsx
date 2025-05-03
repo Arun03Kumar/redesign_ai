@@ -20,7 +20,7 @@ const COMPONENTS = [
   { id: "ai", label: "AI Recommend", icon: <FaRobot size={16} /> },
 ];
 
-const AI_FEATURES = [
+const AI_FEATURES:any = [
   "Third Party Audits",
   "Facial Data Capture",
   "Mental Health Support",
@@ -76,7 +76,7 @@ const AI_FEATURES = [
   "Dislike Bias Training",
 ];
 
-const AI_FEATURE_SCORES = {
+const AI_FEATURE_SCORES:any = {
   "Third Party Audits": 6,
   "Facial Data Capture": -9,
   "Mental Health Support": 9,
@@ -137,7 +137,7 @@ const ItemTypes = {
   AI_FEATURE: "ai_feature",
 };
 
-function DraggableItem({ item, draggable = true, type, isSelected }) {
+function DraggableItem({ item, draggable = true, type, isSelected }: any) {
   const [{ isDragging }, dragRef] = useDrag(
     () => ({
       type: type || ItemTypes.COMPONENT,
@@ -170,7 +170,7 @@ function DraggablePlacedItem({
   resizeItem,
   onDropAIFeature,
   selectedAIFeatures,
-}) {
+}: any) {
   const [{ isDragging }, dragRef] = useDrag(() => ({
     type: ItemTypes.COMPONENT,
     item: { ...item, source: "canvas" },
@@ -181,7 +181,7 @@ function DraggablePlacedItem({
 
   const [{ isOver }, dropRef] = useDrop({
     accept: ItemTypes.AI_FEATURE,
-    drop: (droppedItem) => {
+    drop: (droppedItem:any) => {
       if (onDropAIFeature && !selectedAIFeatures.includes(droppedItem.label)) {
         onDropAIFeature(droppedItem.label);
       }
@@ -197,10 +197,10 @@ function DraggablePlacedItem({
 
   useEffect(() => {
     if (!isFeed) return;
-    const handleMouseMove = (e) => {
-      if (!ref.current?.dataset.resizing) return;
-      const newWidth = e.clientX - ref.current.getBoundingClientRect().left;
-      const newHeight = e.clientY - ref.current.getBoundingClientRect().top;
+    const handleMouseMove = (e:any) => {
+      if (!ref.current?.dataset?.resizing) return;
+      const newWidth = e.clientX - ref?.current?.getBoundingClientRect().left;
+      const newHeight = e.clientY - ref?.current?.getBoundingClientRect().top;
       resizeItem(item.uuid, { width: newWidth, height: newHeight });
     };
     const stopResize = () => {
@@ -245,7 +245,7 @@ function DraggablePlacedItem({
         {item.icon}
         {isAI && (
           <div className="text-xs overflow-auto p-1">
-            {selectedAIFeatures.map((feature) => (
+            {selectedAIFeatures.map((feature:any) => (
               <div key={feature} className="truncate">
                 {feature}
               </div>
@@ -270,19 +270,19 @@ function DropPhone({
   resizeItem,
   selectedAIFeatures,
   onDropAIFeature,
-}) {
-  const phoneRef = useRef(null);
+}:any) {
+  const phoneRef = useRef<any>(null);
 
-  const [, drop] = useDrop({
+  const [, drop] = useDrop<any>({
     accept: ItemTypes.COMPONENT,
     drop: (item, monitor) => {
-      const offset = monitor.getSourceClientOffset();
-      const phoneRect = phoneRef.current.getBoundingClientRect();
+      const offset:any = monitor.getSourceClientOffset();
+      const phoneRect = phoneRef?.current?.getBoundingClientRect();
 
       const x = offset.x - phoneRect.left;
       const y = offset.y - phoneRect.top;
 
-      if (item.source === "toolbox") {
+      if (item?.source === "toolbox") {
         addItem({
           ...item,
           x,
@@ -293,7 +293,7 @@ function DropPhone({
           container: phoneRect,
         });
       } else {
-        moveItem(item.uuid, { x, y });
+        moveItem(item?.uuid, { x, y });
       }
     },
   });
@@ -305,7 +305,7 @@ function DropPhone({
     >
       <div className="absolute top-2 left-1/2 transform -translate-x-1/2 h-4 w-24 bg-gray-300 rounded-full"></div>
       <div ref={drop} className="absolute inset-0">
-        {items.map((item) => (
+        {items.map((item:any) => (
           <DraggablePlacedItem
             key={item.uuid}
             item={item}
@@ -321,19 +321,19 @@ function DropPhone({
 }
 
 function Social() {
-  const [placedItems, setPlacedItems] = useState([]);
-  const [selectedAIFeatures, setSelectedAIFeatures] = useState([]);
+  const [placedItems, setPlacedItems] = useState<any>([]);
+  const [selectedAIFeatures, setSelectedAIFeatures] = useState<any>([]);
 
-  const addItem = (item) => setPlacedItems((prev) => [...prev, item]);
+  const addItem = (item:any) => setPlacedItems((prev:any) => [...prev, item]);
 
-  const handleAIFeatureDrop = (feature) => {
+  const handleAIFeatureDrop = (feature:any) => {
     if (!selectedAIFeatures.includes(feature)) {
-      setSelectedAIFeatures((prev) => [...prev, feature]);
+      setSelectedAIFeatures((prev:any) => [...prev, feature]);
     }
   };
 
-  const moveItem = (uuid, pos) => {
-    const index = placedItems.findIndex((i) => i.uuid === uuid);
+  const moveItem = (uuid:any, pos:any) => {
+    const index = placedItems.findIndex((i:any) => i?.uuid === uuid);
     if (index >= 0) {
       const updated = update(placedItems, {
         [index]: { $merge: pos },
@@ -342,8 +342,8 @@ function Social() {
     }
   };
 
-  const resizeItem = (uuid, size) => {
-    const index = placedItems.findIndex((i) => i.uuid === uuid);
+  const resizeItem = (uuid:any, size:any) => {
+    const index = placedItems.findIndex((i:any) => i.uuid === uuid);
     if (index >= 0) {
       const updated = update(placedItems, {
         [index]: { $merge: size },
@@ -353,7 +353,7 @@ function Social() {
   };
 
   const totalScore = selectedAIFeatures.reduce(
-    (sum, feature) => sum + (AI_FEATURE_SCORES[feature] || 0),
+    (sum:any, feature:any) => sum + (AI_FEATURE_SCORES[feature] || 0),
     0
   );
 
@@ -376,7 +376,7 @@ function Social() {
           <hr className="w-full border-gray-300 my-2" />
           <h3 className="text-lg font-semibold mb-2">AI Features</h3>
           <div className="overflow-y-auto h-full flex flex-wrap gap-2 justify-center pr-2">
-            {AI_FEATURES.map((label) => (
+            {AI_FEATURES.map((label:any) => (
               <DraggableItem
                 key={label}
                 item={{ id: label.toLowerCase().replace(/\s+/g, "_"), label }}
