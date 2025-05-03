@@ -10,6 +10,7 @@ import Emotion from "./components/Emotion";
 import Quiz1 from "./components/quizzes/Quiz1";
 import Cats from "./components/games/Cats";
 import FilterBubble from "./components/games/Bubble/FilterBubble";
+import Social from "./components/games/socail_media/Social";
 
 function App() {
   const location = useLocation(); // Access the current route location
@@ -98,6 +99,7 @@ function App() {
           />
           <Route path="/game/cats" element={<Cats />} />
           <Route path="/game/filter_bubble" element={<FilterBubble />} />
+          <Route path="/game/social_media" element={<Social />} />
         </Routes>
       </AnimatePresence>
     </Layout>
