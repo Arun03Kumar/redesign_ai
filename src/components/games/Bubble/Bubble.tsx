@@ -1,4 +1,4 @@
-import './Bubble.css';
+import "./Bubble.css";
 
 function Bubble() {
   return (

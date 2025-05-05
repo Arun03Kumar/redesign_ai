@@ -1,12 +1,8 @@
-import { useState, useEffect } from "react";
-import robotImage from "../assets/robot.png";
-import { FaArrowRight, FaUndoAlt } from "react-icons/fa"; // Path to your robot image
-import "./stylesheets/HowPage.css";
-import { useNavigate, useLocation } from "react-router-dom";
+import StoryMode from "./StoryMode";
 
 const slides = [
   {
-    media: "/emotion1.mp4", // Video or Image path
+    media: "/emotion1.mp4",
     narration:
       "I don’t feel emotions. I just measure time. If you pause, like, or zoom — I assume you want more.",
   },
@@ -95,87 +91,14 @@ const quizzes = [
 ];
 
 const Emotion = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const navigate = useNavigate();
-  const location = useLocation();
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length); // Loop back to the first slide when the last one is reached
-  };
-
-  // Handle previous slide (left arrow)
-  //   const prevSlide = () => {
-  //     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length); // Loop back to the last slide when the first one is reached
-  //   };
-
-  const isVideo = slides[currentSlide].media.endsWith(".mp4");
-  const isLastSlide = currentSlide === slides.length - 1;
-
-  useEffect(() => {
-    if (location.state?.goToLastSlide) {
-      setCurrentSlide(slides.length - 1);
-    }
-  }, [location.state]);
-
-  const goNextPage = () => {
-    navigate("/emotion"); // 👈 change this to your actual next route
-  };
-  const handleStartQuiz = () => {
-    navigate("/quiz1", {
-      state: {
-        quizData: {
-          quizzes: quizzes,
-          redirectLink: "/emotion", // where to go after completion
-        },
-      },
-    });
-  };
   return (
-    <div className="glass-content">
-      {isVideo ? (
-        <video
-          className="background-video"
-          autoPlay
-          muted
-          loop
-          key={currentSlide}
-        >
-          <source src={slides[currentSlide].media} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-      ) : (
-        <img
-          className="background-image"
-          src={slides[currentSlide].media}
-          alt={`Slide ${currentSlide}`}
-        />
-      )}
-      <div className="right-side-container">
-        <div className="robot-narration-container">
-          <img src={robotImage} alt="Robot Narrator" className="robot-image" />
-          <div className="narration-text">
-            <p>{slides[currentSlide].narration}</p>
-          </div>
-          {isLastSlide ? (
-            <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
-              <button className="replay-button" onClick={nextSlide}>
-                <FaUndoAlt style={{ marginRight: "5px" }} />
-              </button>
-              <button className="next-button" onClick={goNextPage}>
-                Next
-              </button>
-              <button className="next-button quiz" onClick={handleStartQuiz}>
-                Quiz
-              </button>
-            </div>
-          ) : (
-            // Arrow for normal slides
-            <div className="arrow-logo" onClick={nextSlide}>
-              <FaArrowRight size={15} color="#FF6B6B" />
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
+    <StoryMode
+      slides={slides}
+      quizzes={quizzes}
+      nextPage="/emotion"
+      redirect="/emotion"
+      isLast={true}
+    />
   );
 };
 

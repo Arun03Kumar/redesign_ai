@@ -1,324 +1,147 @@
 import { useState, useEffect, useRef } from "react";
 import { FaPlay, FaPause } from "react-icons/fa";
+import { HiArrowNarrowRight, HiArrowNarrowLeft } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
-// import './App.css'; // Rename your CSS file accordingly
 
 const LandingPage = () => {
   const navigate = useNavigate();
-  //   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  //   const [currentPos, setCurrentPos] = useState({ x: 0, y: 0 });
   const [isPlaying, setIsPlaying] = useState(true);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const audioRef = useRef<any>(null);
   const [isSlid, setIsSlid] = useState(false);
-  // const [isPlaying2, setIsPlaying2] = useState(true);
-  // const audioRef2 = useRef(null);
 
-  const handleSlide = () => {
-    setIsSlid(!isSlid);
-  };
+  const handleSlide = () => setIsSlid(!isSlid);
 
   const handlePlayPause = () => {
     if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-      } else {
-        audioRef.current.play();
-      }
+      if (isPlaying) audioRef.current.pause();
+      else audioRef.current.play();
       setIsPlaying(!isPlaying);
     }
   };
 
-  // Initialize audio to play automatically
   useEffect(() => {
     if (audioRef.current) {
-      audioRef.current.play().catch((error) => {
-        console.log(error, "Autoplay prevented, user interaction required");
-      });
+      audioRef.current
+        .play()
+        .catch((err: any) => console.log("Autoplay blocked", err));
     }
   }, []);
 
-  //   useEffect(() => {
-  //     const handleMouseMove = (event: MouseEvent) => {
-  //       setMousePosition({ x: event.clientX, y: event.clientY });
-  //     };
-
-  //     window.addEventListener("mousemove", handleMouseMove);
-
-  //     return () => {
-  //       window.removeEventListener("mousemove", handleMouseMove);
-  //     };
-  //   }, []);
-
-  //   useEffect(() => {
-  //     const move = () => {
-  //       setCurrentPos((prev) => ({
-  //         x: prev.x + (mousePosition.x - prev.x) / 20,
-  //         y: prev.y + (mousePosition.y - prev.y) / 20,
-  //       }));
-  //       requestAnimationFrame(move);
-  //     };
-
-  //     const animationFrame = requestAnimationFrame(move);
-  //     return () => cancelAnimationFrame(animationFrame);
-  //   }, [mousePosition]);
-
-  // const handlePlayPause2 = () => {
-  //   if (audioRef2.current) {
-  //     if (isPlaying2) {
-  //       audioRef2.current.pause(); // Pause the audio if it's playing
-  //     } else {
-  //       audioRef2.current.play(); // Play the audio if it's paused
-  //     }
-  //     setIsPlaying2(!isPlaying2); // Toggle the play/pause state
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   // Initialize the audio to automatically play if autoplay is enabled
-  //   if (audioRef2.current) {
-  //     audioRef2?.current?.play().catch((error:any) => {
-  //       console.log(error, "Autoplay prevented, user interaction required");
-  //     });
-  //   }
-  // }, []);
-
-  const handleHowClick = () => {
-    navigate("/how"); // Navigate to /how when the button is clicked
-  };
+  const handleHowClick = () => navigate("/how");
 
   return (
-    // <div className="container">
-    //   <audio ref={audioRef}>
-    //     <source src="/intro_mp3.mp3" type="audio/mpeg" />
-    //     Your browser does not support the audio element.
-    //   </audio>
-    //   {/* <div className="text-container"></div>
-    //   <div className="gradient-bg">
-    //     <svg xmlns="http://www.w3.org/2000/svg">
-    //       <defs>
-    //         <filter id="goo">
-    //           <feGaussianBlur
-    //             in="SourceGraphic"
-    //             stdDeviation="10"
-    //             result="blur"
-    //           />
-    //           <feColorMatrix
-    //             in="blur"
-    //             mode="matrix"
-    //             values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8"
-    //             result="goo"
-    //           />
-    //           <feBlend in="SourceGraphic" in2="goo" />
-    //         </filter>
-    //       </defs>
-    //     </svg>
-    //     <div className="gradients-container">
-    //       <div className="g1"></div>
-    //       <div className="g2"></div>
-    //       <div className="g3"></div>
-    //       <div className="g4"></div>
-    //       <div className="g5"></div>
-    //       <div
-    //         className="interactive"
-    //         style={{
-    //           transform: `translate(${currentPos.x}px, ${currentPos.y}px)`,
-    //         }}
-    //       ></div>
-    //     </div>
-    //   </div> */}
-    //   <div className="glass-content">
-    //     <div className={`video-container ${isSlid ? "slid" : ""}`}>
-    //       <video
-    //         autoPlay
-    //         muted
-    //         loop
-    //         playsInline
-    //         className="feature-video"
-    //         poster="/video-poster.jpg"
-    //       >
-    //         <source src="/intro.mp4" type="video/mp4" />
-    //       </video>
-    //       <div className={`image-overlay ${isSlid ? "visible" : ""}`}>
-    //         <img src="/red_robo.png" alt="Content Preview" />
-    //       </div>
-    //     </div>
-    //     <div className="glass-text-container">
-    //       {/* <h2 className="glass-title">Discover Amazing Features</h2> */}
-    //       <p
-    //         className={`glass-description main-text ${isSlid ? "hidden" : ""}`}
-    //       >
-    //         Hey there! I’m AI – your very own digital genie! I live inside your
-    //         phone, tablet, or computer. You may not see me, but I’m always here,
-    //         keeping an eye on what you like and what you do. Think of me like a
-    //         genie, but instead of granting wishes, I use my superpowers to make
-    //         your life more fun and interesting! I’m always watching — but not in
-    //         a creepy way! I watch how you scroll, what you click, what makes you
-    //         smile, and even what you talk about. My job? To make sure I show you
-    //         the stuff that makes you happy! Whether it’s funny videos, cool
-    //         games, or interesting pictures, I’m the one behind the scenes,
-    //         trying to keep you entertained and smiling. So, whenever you open
-    //         your phone or computer, just know — I’m here, making sure you’re
-    //         having the best time possible. And remember, the more you use me,
-    //         the better I get at understanding you!
-    //       </p>
-    //       <div className={`new-content ${isSlid ? "visible" : ""}`}>
-    //         <h1>But Secretly....</h1>
-    //         {/* <p>Here's what makes me special:</p> */}
-    //         <ul>
-    //           <li>
-    //             I can <span className="danger">manipulate</span> you.
-    //           </li>
-    //           <li>
-    //             I can <span className="danger">hide</span> the{" "}
-    //             <span className="danger">outer world</span> from you
-    //           </li>
-    //           <li>
-    //             I can <span className="danger">make you buy things</span> which
-    //             you don't need
-    //           </li>
-    //           <li>
-    //             I can <span className="danger">kill</span> your productiveness
-    //           </li>
-    //         </ul>
-    //         <div
-    //           style={{
-    //             display: "flex",
-    //             alignItems: "center",
-    //             justifyContent: "space-between",
-    //           }}
-    //         >
-    //           <button className="blue-button" onClick={handleHowClick}>How ?</button>
-    //           <div className="audio-player">
-    //             <audio ref={audioRef} loop>
-    //               <source src="/intro_mp3.mp3" type="audio/mpeg" />
-    //               Your browser does not support the audio element.
-    //             </audio>
-    //             <button onClick={handlePlayPause} className="play-pause-button">
-    //               {/* Render the Play or Pause icon based on the isPlaying state */}
-    //               {isPlaying ? <FaPause /> : <FaPlay />}
-    //             </button>
-    //           </div>
-    //         </div>
-    //       </div>
-    //       {!isSlid && (
-    //         <div className="controls-container">
-    //           <button
-    //             className="audio-control"
-    //             onClick={handlePlayPause}
-    //             aria-label={isPlaying ? "Pause audio" : "Play audio"}
-    //           >
-    //             <div className={`play-pause ${isPlaying ? "playing" : ""}`}>
-    //               <div className="left-bar"></div>
-    //               <div className="triangle"></div>
-    //               <div className="right-bar"></div>
-    //             </div>
-    //           </button>
-    //           <button
-    //             className="arrow-button"
-    //             onClick={handleSlide}
-    //             aria-label={isSlid ? "Return to previous" : "View more"}
-    //           >
-    //             <div className={`arrow ${isSlid ? "reverse" : ""}`}></div>
-    //           </button>
-    //         </div>
-    //       )}
-    //     </div>
-    //   </div>
-    // </div>
-    <div className="glass-content">
-      <div className={`video-container ${isSlid ? "slid" : ""}`}>
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="feature-video"
-          poster="/video-poster.jpg"
-        >
-          <source src="/intro.mp4" type="video/mp4" />
-        </video>
-        <div className={`image-overlay ${isSlid ? "visible" : ""}`}>
-          <img src="/red_robo.png" alt="Content Preview" />
-        </div>
-      </div>
-      <div className="glass-text-container">
-        {/* <h2 className="glass-title">Discover Amazing Features</h2> */}
-        <p className={`glass-description main-text ${isSlid ? "hidden" : ""}`}>
-          Hey there! I’m AI – your very own digital genie! I live inside your
-          phone, tablet, or computer. You may not see me, but I’m always here,
-          keeping an eye on what you like and what you do. Think of me like a
-          genie, but instead of granting wishes, I use my superpowers to make
-          your life more fun and interesting! I’m always watching — but not in a
-          creepy way! I watch how you scroll, what you click, what makes you
-          smile, and even what you talk about. My job? To make sure I show you
-          the stuff that makes you happy! Whether it’s funny videos, cool games,
-          or interesting pictures, I’m the one behind the scenes, trying to keep
-          you entertained and smiling. So, whenever you open your phone or
-          computer, just know — I’m here, making sure you’re having the best
-          time possible. And remember, the more you use me, the better I get at
-          understanding you!
-        </p>
-        <div className={`new-content ${isSlid ? "visible" : ""}`}>
-          <h1>But Secretly....</h1>
-          {/* <p>Here's what makes me special:</p> */}
-          <ul>
-            <li>
-              I can <span className="danger">manipulate</span> you.
-            </li>
-            <li>
-              I can <span className="danger">hide</span> the{" "}
-              <span className="danger">outer world</span> from you
-            </li>
-            <li>
-              I can <span className="danger">make you buy things</span> which
-              you don't need
-            </li>
-            <li>
-              I can <span className="danger">kill</span> your productiveness
-            </li>
-          </ul>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
+    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[70%] bg-white/10 backdrop-blur-md rounded-xl border border-black/30 shadow-xl flex z-[101] p-8 gap-6 transition-all duration-500">
+      {/* Left Visual Side */}
+      <div className="flex-1 flex items-center justify-center">
+        {isSlid ? (
+          <img
+            src="/red_robo.png"
+            alt="Red Robo"
+            className="w-full h-full object-cover rounded-xl transition-all duration-500"
+          />
+        ) : (
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover rounded-xl transition-all duration-500"
+            poster="/video-poster.jpg"
           >
-            <button className="blue-button" onClick={handleHowClick}>
-              How ?
-            </button>
-            <div className="audio-player">
-              <audio ref={audioRef} loop>
-                <source src="/intro_mp3.mp3" type="audio/mpeg" />
-                Your browser does not support the audio element.
-              </audio>
-              <button onClick={handlePlayPause} className="play-pause-button">
-                {/* Render the Play or Pause icon based on the isPlaying state */}
-                {isPlaying ? <FaPause /> : <FaPlay />}
+            <source src="/intro.mp4" type="video/mp4" />
+          </video>
+        )}
+      </div>
+
+      {/* Right Text Side */}
+      <div className="flex-1 flex flex-col justify-center transition-all duration-500">
+        {isSlid ? (
+          <div className="text-black space-y-6 ml-8">
+            <h1 className="text-6xl font-bold">But Secretly....</h1>
+            <ul className="list-none text-3xl font-medium space-y-3">
+              <li>
+                I can{" "}
+                <span className="text-pink-900 underline">manipulate</span> you.
+              </li>
+              <li>
+                I can <span className="text-pink-900 underline">hide</span> the{" "}
+                <span className="text-pink-900 underline">outer world</span>{" "}
+                from you
+              </li>
+              <li>
+                I can{" "}
+                <span className="text-pink-900 underline">
+                  make you buy things
+                </span>{" "}
+                you don't need
+              </li>
+              <li>
+                I can <span className="text-pink-900 underline">kill</span> your
+                productiveness
+              </li>
+            </ul>
+            <div className="flex items-center justify-between">
+              <button
+                onClick={handleHowClick}
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-xl cursor-pointer"
+              >
+                How ?
               </button>
+              <div className="flex items-center space-x-3 mr-8">
+                <audio ref={audioRef} loop>
+                  <source src="/intro_mp3.mp3" type="audio/mpeg" />
+                </audio>
+                <button
+                  onClick={handlePlayPause}
+                  className="bg-blue-500 p-3 rounded-full text-white hover:bg-blue-700 cursor-pointer"
+                >
+                  {isPlaying ? <FaPause /> : <FaPlay />}
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-        {!isSlid && (
-          <div className="controls-container">
-            <button
-              className="audio-control"
-              onClick={handlePlayPause}
-              aria-label={isPlaying ? "Pause audio" : "Play audio"}
-            >
-              <div className={`play-pause ${isPlaying ? "playing" : ""}`}>
-                <div className="left-bar"></div>
-                <div className="triangle"></div>
-                <div className="right-bar"></div>
-              </div>
-            </button>
-            <button
-              className="arrow-button"
-              onClick={handleSlide}
-              aria-label={isSlid ? "Return to previous" : "View more"}
-            >
-              <div className={`arrow ${isSlid ? "reverse" : ""}`}></div>
-            </button>
+        ) : (
+          <div className="text-black space-y-6">
+            <p className="text-2xl font-bold leading-relaxed">
+              Hey there! I’m AI – your very own digital genie! I live inside
+              your phone, tablet, or computer. You may not see me, but I’m
+              always here, keeping an eye on what you like and what you do.
+              Think of me like a genie, but instead of granting wishes, I use my
+              superpowers to make your life more fun and interesting! I’m always
+              watching — but not in a creepy way! I watch how you scroll, what
+              you click, what makes you smile, and even what you talk about. My
+              job? To make sure I show you the stuff that makes you happy!
+              Whether it’s funny videos, cool games, or interesting pictures,
+              I’m the one behind the scenes, trying to keep you entertained and
+              smiling. So, whenever you open your phone or computer, just know —
+              I’m here, making sure you’re having the best time possible. And
+              remember, the more you use me, the better I get at understanding
+              you!
+            </p>
+            <div className="flex justify-between items-center">
+              <button
+                onClick={handlePlayPause}
+                className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full border-2 border-black/30 flex justify-center items-center hover:shadow-lg transition duration-200 cursor-pointer"
+                aria-label={isPlaying ? "Pause" : "Play"}
+              >
+                {isPlaying ? (
+                  <FaPause className="text-black text-lg" />
+                ) : (
+                  <FaPlay className="text-black text-lg" />
+                )}
+              </button>
+              <button
+                onClick={handleSlide}
+                className="w-10 h-10 bg-white/20 backdrop-blur-sm border-2 border-black/30 rounded-full flex justify-center items-center hover:scale-110 transition duration-200 cursor-pointer"
+                aria-label={isSlid ? "Return" : "View more"}
+              >
+                {isSlid ? (
+                  <HiArrowNarrowLeft className="text-black text-xl" />
+                ) : (
+                  <HiArrowNarrowRight className="text-black text-xl" />
+                )}
+              </button>
+            </div>
           </div>
         )}
       </div>

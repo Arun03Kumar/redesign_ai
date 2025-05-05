@@ -1,17 +1,20 @@
 import { useState, useEffect, useRef } from "react";
-// import "./Layout.css"; // Ensure this line exists and points to the CSS file
+import { useLocation } from "react-router-dom";
 
 const Layout = ({ children }: any) => {
+  const location = useLocation();
+  const hideFab = ["/", "/interactive-app-mode"];
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [currentPos, setCurrentPos] = useState({ x: 0, y: 0 });
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
+  const showFab = !hideFab.includes(location.pathname);
+
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
       setMousePosition({ x: event.clientX, y: event.clientY });
     };
-
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
@@ -41,9 +44,10 @@ const Layout = ({ children }: any) => {
   }, [menuOpen]);
 
   return (
-    <div className="container">
-      <div className="gradient-bg">
-        <svg xmlns="http://www.w3.org/2000/svg">
+    <div className="relative w-screen h-screen font-[Dongle]">
+      {/* Gradient background */}
+      <div className="absolute inset-0 overflow-hidden bg-gradient-to-br from-[#f9ecff] to-[#f2f2f3]">
+        <svg xmlns="http://www.w3.org/2000/svg" className="absolute w-0 h-0">
           <defs>
             <filter id="goo">
               <feGaussianBlur
@@ -61,37 +65,68 @@ const Layout = ({ children }: any) => {
             </filter>
           </defs>
         </svg>
-        <div className="gradients-container">
-          <div className="g1"></div>
-          <div className="g2"></div>
-          <div className="g3"></div>
-          <div className="g4"></div>
-          <div className="g5"></div>
+        <div
+          className="w-full h-full blur-[10px]"
+          style={{ filter: "url(#goo)" }}
+        >
           <div
-            className="interactive"
+            className="absolute w-full h-full rounded-full"
             style={{
               transform: `translate(${currentPos.x}px, ${currentPos.y}px)`,
+              background:
+                "radial-gradient(circle at center, rgba(200, 100, 50, 0.8) 0, rgba(200, 100, 50, 0) 50%)",
+              opacity: 0.7,
+              top: "-50%",
+              left: "-50%",
             }}
           ></div>
         </div>
       </div>
 
-      <div>{children}</div>
+      {/* Main children */}
+      <div className="z-10">{children}</div>
 
-      {/* Floating Button & Menu */}
-      <div className="fab-container">
-        <button
-          className="fab-button"
-          onClick={() => setMenuOpen((prev) => !prev)}
-        >
-          ☰
-        </button>
-        <div ref={menuRef} className={`fab-menu ${menuOpen ? "open" : ""}`}>
-          <a href="/game/cats">Interactive App 1</a>
-          <a href="/game/filter_bubble">Filter Bubble</a>
-          <a href="/game/social_media">Redesign Social App</a>
+      {/* Floating button */}
+      {showFab && (
+        <div className="fixed top-6 left-6 z-50">
+          <button
+            className="w-14 h-14 pt-2 bg-blue-600 text-white text-2xl font-bold rounded-full shadow-md hover:bg-blue-800 transition"
+            onClick={() => setMenuOpen((prev) => !prev)}
+          >
+            ☰
+          </button>
+          <div
+            ref={menuRef}
+            className={`mt-3 p-3 rounded-md shadow-lg flex flex-col text-2xl gap-2 bg-white transition-all origin-top-left transform ${
+              menuOpen
+                ? "scale-100 opacity-100 pointer-events-auto"
+                : "scale-95 opacity-0 pointer-events-none"
+            }`}
+          >
+            <a href="/" className="text-blue-600 font-bold hover:underline">
+              Home
+            </a>
+            <a
+              href="/game/cats"
+              className="text-blue-600 font-bold hover:underline"
+            >
+              Interactive App 1
+            </a>
+            <a
+              href="/game/filter_bubble"
+              className="text-blue-600 font-bold hover:underline"
+            >
+              Filter Bubble
+            </a>
+            <a
+              href="/game/social_media"
+              className="text-blue-600 font-bold hover:underline"
+            >
+              Redesign Social App
+            </a>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
