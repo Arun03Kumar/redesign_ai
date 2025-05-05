@@ -99,6 +99,7 @@ const Product_buy = () => {
       quizzes={quizzes}
       nextPage="/emotion"
       redirect="/product_buy"
+      background_img="/background4.png"
     />
   );
 };

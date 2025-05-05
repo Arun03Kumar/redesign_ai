@@ -98,6 +98,7 @@ const Emotion = () => {
       nextPage="/emotion"
       redirect="/emotion"
       isLast={true}
+      background_img="/background3.png"
     />
   );
 };

@@ -30,14 +30,14 @@ const LandingPage = () => {
   const handleHowClick = () => navigate("/how");
 
   return (
-    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[70%] bg-white/10 backdrop-blur-md rounded-xl border border-black/30 shadow-xl flex z-[101] p-8 gap-6 transition-all duration-500">
+    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[80%] bg-white/10 backdrop-blur-md rounded-xl border border-black/30 shadow-xl flex z-[101] p-8 gap-6 transition-all duration-500">
       {/* Left Visual Side */}
       <div className="flex-1 flex items-center justify-center">
         {isSlid ? (
           <img
             src="/red_robo.png"
             alt="Red Robo"
-            className="w-full h-full object-cover rounded-xl transition-all duration-500"
+            className="w-full h-full max-h-[80vh] object-cover rounded-xl transition-all duration-500"
           />
         ) : (
           <video
@@ -58,7 +58,7 @@ const LandingPage = () => {
         {isSlid ? (
           <div className="text-black space-y-6 ml-8">
             <h1 className="text-6xl font-bold">But Secretly....</h1>
-            <ul className="list-none text-3xl font-medium space-y-3">
+            <ul className="list-disc text-3xl font-medium space-y-3 ml-8">
               <li>
                 I can{" "}
                 <span className="text-pink-900 underline">manipulate</span> you.
@@ -102,21 +102,11 @@ const LandingPage = () => {
           </div>
         ) : (
           <div className="text-black space-y-6">
-            <p className="text-2xl font-bold leading-relaxed">
-              Hey there! I’m AI – your very own digital genie! I live inside
-              your phone, tablet, or computer. You may not see me, but I’m
-              always here, keeping an eye on what you like and what you do.
-              Think of me like a genie, but instead of granting wishes, I use my
-              superpowers to make your life more fun and interesting! I’m always
-              watching — but not in a creepy way! I watch how you scroll, what
-              you click, what makes you smile, and even what you talk about. My
-              job? To make sure I show you the stuff that makes you happy!
-              Whether it’s funny videos, cool games, or interesting pictures,
-              I’m the one behind the scenes, trying to keep you entertained and
-              smiling. So, whenever you open your phone or computer, just know —
-              I’m here, making sure you’re having the best time possible. And
-              remember, the more you use me, the better I get at understanding
-              you!
+            <p className="text-2xl font-bold leading-relaxed text-justify">
+              Hey there! I’m your digital genie — always watching how you
+              scroll, click, and smile to show you what you love. Whether it’s
+              funny videos or cool games, I’m here to keep you entertained. The
+              more you use me, the better I understand you!
             </p>
             <div className="flex justify-between items-center">
               <button

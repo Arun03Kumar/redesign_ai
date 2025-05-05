@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
+import { useBackground } from "../context/BackgroundContext";
 
 const Layout = ({ children }: any) => {
   const location = useLocation();
@@ -8,6 +9,15 @@ const Layout = ({ children }: any) => {
   const [currentPos, setCurrentPos] = useState({ x: 0, y: 0 });
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+
+  const {background} = useBackground();
+  // const gradientStyle = {
+  //   background: `linear-gradient(to bottom right, ${gradient.from}, ${gradient.to})`,
+  // };
+
+  const backgroundStyle = background.type === "gradient"
+  ? { background: `linear-gradient(to bottom right, ${background.from}, ${background.to})` }
+  : { backgroundImage: `url(${background.url})`, backgroundSize: 'cover', backgroundPosition: 'center' };
 
   const showFab = !hideFab.includes(location.pathname);
 
@@ -22,8 +32,8 @@ const Layout = ({ children }: any) => {
   useEffect(() => {
     const move = () => {
       setCurrentPos((prev) => ({
-        x: prev.x + (mousePosition.x - prev.x) / 20,
-        y: prev.y + (mousePosition.y - prev.y) / 20,
+        x: prev.x + (mousePosition.x - prev.x) / 10,
+        y: prev.y + (mousePosition.y - prev.y) / 10,
       }));
       requestAnimationFrame(move);
     };
@@ -44,10 +54,10 @@ const Layout = ({ children }: any) => {
   }, [menuOpen]);
 
   return (
-    <div className="relative w-screen h-screen font-[Dongle]">
+    <div className="relative w-screen h-screen font-[Nunito]">
       {/* Gradient background */}
-      <div className="absolute inset-0 overflow-hidden bg-gradient-to-br from-[#f9ecff] to-[#f2f2f3]">
-        <svg xmlns="http://www.w3.org/2000/svg" className="absolute w-0 h-0">
+      <div className="absolute inset-0 overflow-hidden" style={backgroundStyle}>
+        {/* <svg xmlns="http://www.w3.org/2000/svg" className="absolute w-0 h-0">
           <defs>
             <filter id="goo">
               <feGaussianBlur
@@ -64,8 +74,8 @@ const Layout = ({ children }: any) => {
               <feBlend in="SourceGraphic" in2="goo" />
             </filter>
           </defs>
-        </svg>
-        <div
+        </svg> */}
+        {/* <div
           className="w-full h-full blur-[10px]"
           style={{ filter: "url(#goo)" }}
         >
@@ -74,20 +84,20 @@ const Layout = ({ children }: any) => {
             style={{
               transform: `translate(${currentPos.x}px, ${currentPos.y}px)`,
               background:
-                "radial-gradient(circle at center, rgba(200, 100, 50, 0.8) 0, rgba(200, 100, 50, 0) 50%)",
+                "radial-gradient(circle at center, rgba(199, 140, 115, 0.6) 0, rgba(58, 36, 25, 0) 50%)",
               opacity: 0.7,
               top: "-50%",
               left: "-50%",
             }}
           ></div>
-        </div>
+        </div> */}
       </div>
 
       {/* Main children */}
       <div className="z-10">{children}</div>
 
       {/* Floating button */}
-      {showFab && (
+      {/* {showFab && (
         <div className="fixed top-6 left-6 z-50">
           <button
             className="w-14 h-14 pt-2 bg-blue-600 text-white text-2xl font-bold rounded-full shadow-md hover:bg-blue-800 transition"
@@ -126,7 +136,7 @@ const Layout = ({ children }: any) => {
             </a>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

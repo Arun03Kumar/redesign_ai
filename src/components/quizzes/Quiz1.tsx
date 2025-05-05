@@ -48,7 +48,7 @@ const Quiz1 = () => {
   };
 
   return (
-    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[70%] min-h-[400px] p-8">
+    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[80%] min-h-[400px] p-8 backdrop-blur-2xl border-2 border-black/30 rounded-lg">
       <div className="bg-balck/5 backdrop-blur-md rounded-lg shadow-xl text-balck p-6 mb-8 flex items-center border-2 border-black/30">
         <h2 className="text-3xl font-bold mr-4">Question {currentQuiz + 1}:</h2>
         <p className="text-3xl font-bold">{current?.question}</p>
