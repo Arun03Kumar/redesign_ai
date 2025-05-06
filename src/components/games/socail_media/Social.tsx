@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, forwardRef } from "react";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import update from "immutability-helper";
@@ -9,7 +9,8 @@ import {
   FaNewspaper,
   FaRobot,
   FaCog,
-  FaHome, FaArrowLeft
+  FaHome,
+  FaArrowLeft,
 } from "react-icons/fa";
 import { useBackground } from "../../../context/BackgroundContext";
 import { useNavigate } from "react-router-dom";
@@ -140,31 +141,56 @@ const ItemTypes = {
   AI_FEATURE: "ai_feature",
 };
 
-function DraggableItem({ item, draggable = true, type, isUsed }: any) {
-  const [{ isDragging }, dragRef] = useDrag(() => ({
-    type: type || ItemTypes.COMPONENT,
-    item: { ...item, source: "toolbox" },
-    canDrag: () => draggable && !isUsed,
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
-  }));
+// import { forwardRef } from 'react';
+// import { useDrag } from 'react-dnd';
 
-  return (
-    <div
-      ref={dragRef}
-      className={`w-24 h-24 ${
-        isUsed ? "bg-green-300 border-green-600" : "bg-white border-blue-200"
-      } rounded-2xl flex flex-col items-center justify-center shadow-lg cursor-$
-      {draggable && !isUsed ? "grab" : "default"} transition-all hover:scale-105 active:scale-95 border-2 ${
-        isDragging ? "opacity-50" : ""
-      }`}
-    >
-      <span className="text-2xl mb-1">{item.icon}</span>
-      <span className="text-sm font-bold text-center px-1">{item.label}</span>
-    </div>
-  );
+interface DraggableItemProps {
+  item: any;
+  draggable?: boolean;
+  type?: string;
+  isUsed?: boolean;
 }
+
+const DraggableItem = forwardRef<HTMLDivElement, DraggableItemProps>(
+  ({ item, draggable = true, type, isUsed }, ref) => {
+    const [{ isDragging }, dragRef] = useDrag(() => ({
+      type: type || "component",
+      item: { ...item, source: "toolbox" },
+      canDrag: () => draggable && !isUsed,
+      collect: (monitor) => ({
+        isDragging: monitor.isDragging(),
+      }),
+    }));
+
+    // Merge DnD ref with forwarded ref
+    const combinedRef = (node: HTMLDivElement) => {
+      dragRef(node);
+      if (typeof ref === "function") {
+        ref(node);
+      } else if (ref) {
+        (ref as React.MutableRefObject<HTMLDivElement>).current = node;
+      }
+    };
+
+    return (
+      <div
+        ref={combinedRef}
+        className={`w-24 h-24 ${
+          isUsed ? "bg-green-300 border-green-600" : "bg-white border-blue-200"
+        } rounded-2xl flex flex-col items-center justify-center shadow-lg cursor-${
+          draggable && !isUsed ? "grab" : "default"
+        } transition-all hover:scale-105 active:scale-95 border-2 ${
+          isDragging ? "opacity-50" : ""
+        }`}
+      >
+        <span className="text-2xl mb-1">{item.icon}</span>
+        <span className="text-sm font-bold text-center px-1">{item.label}</span>
+      </div>
+    );
+  }
+);
+
+// export default DraggableItem;
 
 function DraggablePlacedItem({
   item,
@@ -265,7 +291,7 @@ function DropPhone({
   const phoneRef = useRef<any>(null);
   const [, drop] = useDrop({
     accept: ItemTypes.COMPONENT,
-    drop: (item:any, mon) => {
+    drop: (item: any, mon) => {
       const offset: any = mon.getSourceClientOffset();
       const rect = phoneRef.current.getBoundingClientRect();
       const x = offset.x - rect.left,
@@ -282,8 +308,14 @@ function DropPhone({
       className="w-64 h-[480px] border-4 border-black rounded-[2rem] bg-white relative"
     >
       <div className="absolute top-2 left-1/2 transform -translate-x-1/2 h-4 w-24 bg-gray-300 rounded-full"></div>
-      <div ref={drop} className="absolute inset-0">
-        {items.map((i:any) => (
+      <div
+        ref={(node) => {
+          phoneRef.current = node;
+          drop(node);
+        }}
+        className="absolute inset-0"
+      >
+        {items.map((i: any) => (
           <DraggablePlacedItem
             key={i.uuid}
             item={i}
@@ -301,11 +333,18 @@ function DropPhone({
 function Social() {
   const [placedItems, setPlacedItems] = useState<any[]>([]);
   const [selectedAIFeatures, setSelectedAIFeatures] = useState<string[]>([]);
-  const navigate = useNavigate()
-  const {background} = useBackground()
-  const backgroundStyle = background.type === "gradient"
-  ? { background: `linear-gradient(to bottom right, ${background.from}, ${background.to})` }
-  : { backgroundImage: `url(${background.url})`, backgroundSize: 'cover', backgroundPosition: 'center' };
+  const navigate = useNavigate();
+  const { background } = useBackground();
+  const backgroundStyle =
+    background.type === "gradient"
+      ? {
+          background: `linear-gradient(to bottom right, ${background.from}, ${background.to})`,
+        }
+      : {
+          backgroundImage: `url(${background.url})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        };
 
   const addItem = (i: any) => setPlacedItems((prev) => [...prev, i]);
   const handleAIFeatureDrop = (f: string) => {
@@ -372,7 +411,10 @@ function Social() {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className="flex h-screen w-screen overflow-hidden text-gray-900 absolute left-0 top-0 font-comic" style={backgroundStyle}>
+      <div
+        className="flex h-screen w-screen overflow-hidden text-gray-900 absolute left-0 top-0 font-comic"
+        style={backgroundStyle}
+      >
         <div className="w-1/4 backdrop-blur-3xl shadow-xl p-4 flex flex-col rounded-r-2xl border-4 border-white">
           <h2 className="text-2xl font-bold mb-4 text-purple-600 drop-shadow-sm flex items-center gap-2">
             🎨 Magic Tools

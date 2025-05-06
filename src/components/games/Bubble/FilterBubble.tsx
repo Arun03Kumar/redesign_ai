@@ -132,7 +132,7 @@ function FilterBubble() {
           Math.random() * (pageHeight - buttonHeight * 2) -
           pageHeight / 2 +
           buttonHeight;
-        const dist = Math.sqrt(x * x + y * y);
+        // const dist = Math.sqrt(x * x + y * y);
         tries++;
         if (tries > 100) break; // safety
       } while (Math.sqrt(x * x + y * y) < safeRadius || isOverlapping(x, y));
