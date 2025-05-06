@@ -99,6 +99,7 @@ const Emotion = () => {
       redirect="/emotion"
       isLast={true}
       background_img="/background3.png"
+      fun_link="/game/social_media"
     />
   );
 };

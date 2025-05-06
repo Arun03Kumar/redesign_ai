@@ -11,6 +11,7 @@ const StoryMode = ({
   redirect,
   isLast = false,
   background_img,
+  fun_link
 }: any) => {
   const location = useLocation();
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -132,7 +133,7 @@ const StoryMode = ({
                 Quiz
               </button>
               <button
-                onClick={() => navigate("/game/cats")}
+                onClick={() => navigate(fun_link, {state: {from: redirect, goToLastSlide: true}})}
                 className="flex items-center gap-2 px-6 py-3 rounded bg-cyan-600 text-white font-bold shadow hover:bg-emerald-700 hover:shadow-md transition duration-200 cursor-pointer"
               >
                 Fun

@@ -13,6 +13,9 @@ import FilterBubble from "./components/games/Bubble/FilterBubble";
 import Social from "./components/games/socail_media/Social";
 import HomePage from "./components/HomePage";
 import InteractiveModePage from "./components/InteractiveModeApp";
+import Intro from "./components/games/ad_target/Intro";
+import DialogueScene from "./components/games/ad_target/DialogueScene";
+import ImageQuestion from "./components/games/ad_target/ImageQuestion";
 
 function App() {
   const location = useLocation();
@@ -108,6 +111,9 @@ function App() {
           <Route path="/game/cats" element={<Cats />} />
           <Route path="/game/filter_bubble" element={<FilterBubble />} />
           <Route path="/game/social_media" element={<Social />} />
+          <Route path="/game/ad" element={<Intro />} />
+          <Route path="/dialogue" element={<DialogueScene />} />
+          <Route path="/ad-crafter" element={<ImageQuestion />} />
         </Routes>
       </AnimatePresence>
     </Layout>

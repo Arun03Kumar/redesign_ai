@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import update from "immutability-helper";
@@ -9,7 +9,10 @@ import {
   FaNewspaper,
   FaRobot,
   FaCog,
+  FaHome, FaArrowLeft
 } from "react-icons/fa";
+import { useBackground } from "../../../context/BackgroundContext";
+import { useNavigate } from "react-router-dom";
 
 const COMPONENTS = [
   { id: "like", label: "Like", icon: <FaThumbsUp size={16} /> },
@@ -20,7 +23,7 @@ const COMPONENTS = [
   { id: "ai", label: "AI Recommend", icon: <FaRobot size={16} /> },
 ];
 
-const AI_FEATURES: any = [
+const AI_FEATURES = [
   "Third Party Audits",
   "Facial Data Capture",
   "Mental Health Support",
@@ -76,7 +79,7 @@ const AI_FEATURES: any = [
   "Dislike Bias Training",
 ];
 
-const AI_FEATURE_SCORES: any = {
+const AI_FEATURE_SCORES: Record<string, number> = {
   "Third Party Audits": 6,
   "Facial Data Capture": -9,
   "Mental Health Support": 9,
@@ -137,31 +140,28 @@ const ItemTypes = {
   AI_FEATURE: "ai_feature",
 };
 
-function DraggableItem({ item, draggable = true, type, isSelected }: any) {
-  const [{ isDragging }, dragRef] = useDrag<any, void, { isDragging: any }>(
-    () => ({
-      type: type || ItemTypes.COMPONENT,
-      item: { ...item, source: "toolbox" },
-      canDrag: () => draggable,
-      collect: (monitor) => ({
-        isDragging: monitor.isDragging(),
-      }),
+function DraggableItem({ item, draggable = true, type, isUsed }: any) {
+  const [{ isDragging }, dragRef] = useDrag(() => ({
+    type: type || ItemTypes.COMPONENT,
+    item: { ...item, source: "toolbox" },
+    canDrag: () => draggable && !isUsed,
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
     }),
-    [draggable, type]
-  );
+  }));
 
   return (
     <div
-      ref={(node) => {
-        dragRef(node);
-      }}
-      className={`w-22 h-22 ${
-        isSelected ? "bg-green-200" : "bg-gray-100"
-      } hover:bg-gray-200 rounded-lg flex items-center justify-center shadow-md cursor-${
-        draggable ? "grab" : "default"
-      } ${isDragging ? "opacity-50" : ""}`}
+      ref={dragRef}
+      className={`w-24 h-24 ${
+        isUsed ? "bg-green-300 border-green-600" : "bg-white border-blue-200"
+      } rounded-2xl flex flex-col items-center justify-center shadow-lg cursor-$
+      {draggable && !isUsed ? "grab" : "default"} transition-all hover:scale-105 active:scale-95 border-2 ${
+        isDragging ? "opacity-50" : ""
+      }`}
     >
-      {item.icon || <span className="text-lg text-center">{item.label}</span>}
+      <span className="text-2xl mb-1">{item.icon}</span>
+      <span className="text-sm font-bold text-center px-1">{item.label}</span>
     </div>
   );
 }
@@ -175,9 +175,7 @@ function DraggablePlacedItem({
   const [{ isDragging }, dragRef] = useDrag(() => ({
     type: ItemTypes.COMPONENT,
     item: { ...item, source: "canvas" },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
+    collect: (monitor) => ({ isDragging: monitor.isDragging() }),
   }));
 
   const [{ isOver }, dropRef] = useDrop({
@@ -187,9 +185,7 @@ function DraggablePlacedItem({
         onDropAIFeature(droppedItem.label);
       }
     },
-    collect: (monitor) => ({
-      isOver: monitor.isOver(),
-    }),
+    collect: (monitor) => ({ isOver: monitor.isOver() }),
   });
 
   const ref = useRef<any>(null);
@@ -199,17 +195,16 @@ function DraggablePlacedItem({
   useEffect(() => {
     if (!isFeed) return;
     const handleMouseMove = (e: any) => {
-      if (!ref?.current?.dataset?.resizing) return;
-      const newWidth = e.clientX - ref?.current?.getBoundingClientRect().left;
-      const newHeight = e.clientY - ref?.current?.getBoundingClientRect().top;
-      resizeItem(item.uuid, { width: newWidth, height: newHeight });
+      if (!ref.current?.dataset?.resizing) return;
+      const newW = e.clientX - ref.current.getBoundingClientRect().left;
+      const newH = e.clientY - ref.current.getBoundingClientRect().top;
+      resizeItem(item.uuid, { width: newW, height: newH });
     };
     const stopResize = () => {
       if (ref.current) ref.current.dataset.resizing = "";
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseup", stopResize);
     };
-
     window.addEventListener("mouseup", stopResize);
     window.addEventListener("mousemove", handleMouseMove);
     return () => {
@@ -221,13 +216,8 @@ function DraggablePlacedItem({
   const startResize = () => {
     if (ref.current) ref.current.dataset.resizing = "true";
   };
-
-  // Combine drag and drop refs for AI component
-  if (isAI) {
-    dragRef(dropRef(ref));
-  } else {
-    dragRef(ref);
-  }
+  if (isAI) dragRef(dropRef(ref));
+  else dragRef(ref);
 
   return (
     <div
@@ -246,9 +236,9 @@ function DraggablePlacedItem({
         {item.icon}
         {isAI && (
           <div className="text-xs overflow-auto p-1">
-            {selectedAIFeatures.map((feature: any) => (
-              <div key={feature} className="truncate">
-                {feature}
+            {selectedAIFeatures.map((f: string) => (
+              <div key={f} className="truncate">
+                {f}
               </div>
             ))}
           </div>
@@ -273,29 +263,16 @@ function DropPhone({
   onDropAIFeature,
 }: any) {
   const phoneRef = useRef<any>(null);
-
-  const [, drop] = useDrop<any>({
+  const [, drop] = useDrop({
     accept: ItemTypes.COMPONENT,
-    drop: (item, monitor) => {
-      const offset: any = monitor.getSourceClientOffset();
-      const phoneRect = phoneRef?.current?.getBoundingClientRect();
-
-      const x = offset.x - phoneRect.left;
-      const y = offset.y - phoneRect.top;
-
-      if (item?.source === "toolbox") {
-        addItem({
-          ...item,
-          x,
-          y,
-          width: 60,
-          height: 40,
-          uuid: Date.now(),
-          container: phoneRect,
-        });
-      } else {
-        moveItem(item?.uuid, { x, y });
-      }
+    drop: (item, mon) => {
+      const offset: any = mon.getSourceClientOffset();
+      const rect = phoneRef.current.getBoundingClientRect();
+      const x = offset.x - rect.left,
+        y = offset.y - rect.top;
+      if (item.source === "toolbox")
+        addItem({ ...item, x, y, width: 60, height: 40, uuid: Date.now() });
+      else moveItem(item.uuid, { x, y });
     },
   });
 
@@ -305,20 +282,15 @@ function DropPhone({
       className="w-64 h-[480px] border-4 border-black rounded-[2rem] bg-white relative"
     >
       <div className="absolute top-2 left-1/2 transform -translate-x-1/2 h-4 w-24 bg-gray-300 rounded-full"></div>
-      <div
-        ref={(node) => {
-          drop(node);
-        }}
-        className="absolute inset-0"
-      >
-        {items.map((item: any) => (
+      <div ref={drop} className="absolute inset-0">
+        {items.map((i) => (
           <DraggablePlacedItem
-            key={item.uuid}
-            item={item}
-            moveItem={moveItem}
+            key={i.uuid}
+            item={i}
             resizeItem={resizeItem}
-            onDropAIFeature={item.id === "ai" ? onDropAIFeature : undefined}
+            onDropAIFeature={i.id === "ai" ? onDropAIFeature : undefined}
             selectedAIFeatures={selectedAIFeatures}
+            moveItem={moveItem}
           />
         ))}
       </div>
@@ -327,75 +299,110 @@ function DropPhone({
 }
 
 function Social() {
-  const [placedItems, setPlacedItems] = useState<any>([]);
-  const [selectedAIFeatures, setSelectedAIFeatures] = useState<any>([]);
+  const [placedItems, setPlacedItems] = useState<any[]>([]);
+  const [selectedAIFeatures, setSelectedAIFeatures] = useState<string[]>([]);
+  const navigate = useNavigate()
+  const {background} = useBackground()
+  const backgroundStyle = background.type === "gradient"
+  ? { background: `linear-gradient(to bottom right, ${background.from}, ${background.to})` }
+  : { backgroundImage: `url(${background.url})`, backgroundSize: 'cover', backgroundPosition: 'center' };
 
-  const addItem = (item: any) => setPlacedItems((prev: any) => [...prev, item]);
-
-  const handleAIFeatureDrop = (feature: any) => {
-    if (!selectedAIFeatures.includes(feature)) {
-      setSelectedAIFeatures((prev: any) => [...prev, feature]);
+  const addItem = (i: any) => setPlacedItems((prev) => [...prev, i]);
+  const handleAIFeatureDrop = (f: string) => {
+    if (!selectedAIFeatures.includes(f))
+      setSelectedAIFeatures((prev) => [...prev, f]);
+  };
+  const moveItem = (uuid: number, pos: any) => {
+    const idx = placedItems.findIndex((i) => i.uuid === uuid);
+    if (idx >= 0) {
+      setPlacedItems(update(placedItems, { [idx]: { $merge: pos } }));
+    }
+  };
+  const resizeItem = (uuid: number, size: any) => {
+    const idx = placedItems.findIndex((i) => i.uuid === uuid);
+    if (idx >= 0) {
+      setPlacedItems(update(placedItems, { [idx]: { $merge: size } }));
     }
   };
 
-  const moveItem = (uuid: any, pos: any) => {
-    const index = placedItems.findIndex((i: any) => i?.uuid === uuid);
-    if (index >= 0) {
-      const updated = update(placedItems, {
-        [index]: { $merge: pos },
-      });
-      setPlacedItems(updated);
-    }
-  };
-
-  const resizeItem = (uuid: any, size: any) => {
-    const index = placedItems.findIndex((i: any) => i.uuid === uuid);
-    if (index >= 0) {
-      const updated = update(placedItems, {
-        [index]: { $merge: size },
-      });
-      setPlacedItems(updated);
-    }
-  };
-
-  const totalScore = selectedAIFeatures.reduce(
-    (sum: any, feature: any) => sum + (AI_FEATURE_SCORES[feature] || 0),
-    0
+  // compute used flags
+  const usedComponents = COMPONENTS.map((c) =>
+    placedItems.some((i) => i.id === c.id)
   );
 
-  const MAX = 134;
-  const MIN = -111;
-  // const RANGE = MAX - MIN; // = 245
-  // const percent = ((totalScore - MIN) / RANGE) * 100;
+  const totalScore = selectedAIFeatures.reduce(
+    (sum, f) => sum + (AI_FEATURE_SCORES[f] || 0),
+    0
+  );
+  const MAX_TOTAL = Object.values(AI_FEATURE_SCORES).reduce(
+    (s, n) => s + (n > 0 ? n : 0),
+    0
+  );
+  const MIN_TOTAL = Object.values(AI_FEATURE_SCORES).reduce(
+    (s, n) => s + (n < 0 ? n : 0),
+    0
+  );
+  const positivePercentage = Math.min(
+    (Math.max(totalScore, 0) / MAX_TOTAL) * 100,
+    100
+  );
+  const negativePercentage = Math.min(
+    (Math.abs(Math.min(totalScore, 0)) / Math.abs(MIN_TOTAL)) * 100,
+    100
+  );
+
+  const getScoreEmoji = (score: number) => {
+    const pos70 = MAX_TOTAL * 0.7;
+    const neg70 = MIN_TOTAL * 0.7;
+    if (score >= pos70) return "🚀";
+    if (score >= pos70 * 0.5) return "🎉";
+    if (score >= 0) return "😊";
+    if (score >= neg70) return "😕";
+    return "😱";
+  };
+  const getScoreMessage = (score: number) => {
+    const pos70 = MAX_TOTAL * 0.7;
+    const neg70 = MIN_TOTAL * 0.7;
+    if (score >= pos70) return "Wow! You're a Super Designer! 🌟";
+    if (score >= pos70 * 0.5) return "Great Job! Keep Going! 💪";
+    if (score >= 0) return "Good Start! Add More Green! 🌱";
+    if (score >= neg70) return "Uh-oh! Let's Fix This! 🛠️";
+    return "Red Alert! Needs More Care! 🚨";
+  };
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className="flex h-screen w-screen overflow-hidden bg-gradient-to-br from-white to-slate-100 text-gray-900 absolute left-0 top-0">
-        {/* Left Panel */}
-        <div className="w-1/4 bg-white shadow-lg p-4 flex flex-col">
-          <h2 className="text-xl font-bold">Toolbox</h2>
-          <div className="flex flex-wrap gap-2 justify-center mb-4">
-            {COMPONENTS.map((c) => (
-              <DraggableItem key={c.id} item={c} />
+      <div className="flex h-screen w-screen overflow-hidden text-gray-900 absolute left-0 top-0 font-comic" style={backgroundStyle}>
+        <div className="w-1/4 backdrop-blur-3xl shadow-xl p-4 flex flex-col rounded-r-2xl border-4 border-white">
+          <h2 className="text-2xl font-bold mb-4 text-purple-600 drop-shadow-sm flex items-center gap-2">
+            🎨 Magic Tools
+          </h2>
+          <div className="flex flex-wrap gap-3 justify-center mb-4">
+            {COMPONENTS.map((c, i) => (
+              <DraggableItem
+                key={c.id}
+                item={{ ...c, icon: React.cloneElement(c.icon, { size: 24 }) }}
+                isUsed={usedComponents[i]}
+              />
             ))}
           </div>
-          <hr className="w-full border-gray-300 my-2" />
-          <h3 className="text-lg font-semibold mb-2">AI Features</h3>
+          <hr className="w-full border-2 border-white my-3" />
+          <h3 className="text-xl font-bold mb-3 text-blue-600 flex items-center gap-2">
+            🤖 Super Powers
+          </h3>
           <div className="overflow-y-auto h-full flex flex-wrap gap-2 justify-center pr-2">
-            {AI_FEATURES.map((label: any) => (
+            {AI_FEATURES.map((label) => (
               <DraggableItem
                 key={label}
                 item={{ id: label.toLowerCase().replace(/\s+/g, "_"), label }}
-                draggable={true}
+                draggable={!selectedAIFeatures.includes(label)}
                 type={ItemTypes.AI_FEATURE}
-                isSelected={selectedAIFeatures.includes(label)}
+                isUsed={selectedAIFeatures.includes(label)}
               />
             ))}
           </div>
         </div>
-
-        {/* Center Panel */}
-        <div className="w-2/4 bg-blue-50 flex items-center justify-center">
+        <div className="w-2/4 backdrop-blur-xl flex items-center justify-center p-8">
           <DropPhone
             items={placedItems}
             addItem={addItem}
@@ -405,45 +412,73 @@ function Social() {
             onDropAIFeature={handleAIFeatureDrop}
           />
         </div>
+        <div className="w-1/4 shadow-inner p-4 flex flex-col items-center justify-center rounded-l-2xl border-4 border-white">
+          <h2 className="text-2xl font-bold mb-4 text-white-700 flex items-center gap-2">
+            🌈 Fun Meter
+          </h2>
+          <div className="w-full mb-4 relative h-16 bg-white rounded-2xl overflow-hidden border-4 border-yellow-400">
+            {/* Pivot line */}
+            <div className="absolute left-1/2 top-0 bottom-0 w-2 bg-yellow-400 transform -translate-x-1/2" />
 
-        {/* Right Panel */}
-        <div className="w-1/4 bg-white shadow-inner p-4 flex flex-col items-center">
-          <h2 className="text-xl font-bold mb-2">Ethics Score</h2>
-          <div className="w-full mb-4 relative h-12 bg-gray-100 rounded-lg overflow-hidden">
-            <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-gray-400"></div>
-            <div
-              className={`absolute h-full top-0 transition-all duration-300 ${
-                totalScore >= 0 ? "bg-green-500" : "bg-red-500"
-              }`}
-              style={{
-                width: `${
-                  (Math.abs(totalScore) /
-                    (totalScore > 0 ? MAX : Math.abs(MIN))) *
-                  50
-                }%`,
-                left: totalScore >= 0 ? "50%" : undefined,
-                right: totalScore < 0 ? "50%" : undefined,
-                transform: "translateX(0%)",
-                zIndex: 0,
-              }}
-            ></div>
+            {/* Positive bar from center rightward */}
+            {positivePercentage > 0 && (
+              <div
+                className="absolute h-full bg-green-400 transition-all duration-500"
+                style={{
+                  width: `${positivePercentage}%`,
+                  left: "50%",
+                }}
+              />
+            )}
+
+            {/* Negative bar from center leftward */}
+            {negativePercentage > 0 && (
+              <div
+                className="absolute h-full bg-red-400 transition-all duration-500"
+                style={{
+                  width: `${negativePercentage}%`,
+                  right: "50%",
+                }}
+              />
+            )}
+
+            {/* Score indicator */}
             <div className="absolute inset-0 flex items-center justify-center">
-              <span className="font-bold text-gray-700 bg-white px-2 rounded">
-                {totalScore}
-              </span>
+              <div className="bg-white px-4 py-1 rounded-full border-2 border-purple-500 shadow-md">
+                <span className="font-bold text-2xl text-purple-600">
+                  {totalScore}{" "}
+                  <span className="ml-2">{getScoreEmoji(totalScore)}</span>
+                </span>
+              </div>
             </div>
           </div>
-          <p className="text-sm text-center px-2">
-            {totalScore >= 10
-              ? "🌟 Excellent! Ethical design focus!"
-              : totalScore >= 5
-              ? "✅ Good balance!"
-              : totalScore >= 0
-              ? "⚠️ Needs improvement"
-              : totalScore >= -5
-              ? "⚠️⚠️ Concerning design choices"
-              : "🚨 Dangerous! High manipulation risk!"}
+          <p className="text-lg text-center px-2 font-semibold bg-white rounded-lg p-2 border-2 border-blue-300">
+            {getScoreMessage(totalScore)}
           </p>
+          <div className="mt-4 w-full flex justify-center">
+            <div className="bg-white p-2 rounded-lg border-2 border-red-300">
+              <span className="text-sm">🌟 Pro Tip:</span>
+              <p className="text-xs">
+                Add more green powers to make friends happy!
+              </p>
+            </div>
+          </div>
+          <div className="flex justify-center gap-4 mb-4 pt-80">
+            <button
+              onClick={() => navigate("/")}
+              className="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded shadow flex items-center gap-2 cursor-pointer"
+            >
+              <FaHome size={16} />
+              Home
+            </button>
+            <button
+              onClick={() => navigate("/interactive-app-mode")}
+              className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded shadow flex items-center gap-2 cursor-pointer"
+            >
+              <FaArrowLeft size={16} />
+              Back
+            </button>
+          </div>
         </div>
       </div>
     </DndProvider>

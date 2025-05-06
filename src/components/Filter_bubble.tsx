@@ -130,6 +130,7 @@ const Filter_bubble = () => {
       nextPage="/product_buy"
       redirect="/filter_bubble"
       background_img="/background3.png"
+      fun_link="/game/filter_bubble"
     />
   );
 };

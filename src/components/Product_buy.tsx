@@ -100,6 +100,7 @@ const Product_buy = () => {
       nextPage="/emotion"
       redirect="/product_buy"
       background_img="/background4.png"
+      fun_link="/game/ad"
     />
   );
 };

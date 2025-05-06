@@ -136,6 +136,7 @@ const HowPage = () => {
       nextPage="/filter_bubble"
       redirect="/how"
       background_img="/background4.png"
+      fun_link="/game/cats"
     />
   );
 };

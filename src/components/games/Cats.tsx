@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useBackground } from "../../context/BackgroundContext";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const reelsYes = [
   {
@@ -59,6 +60,8 @@ export default function Cats() {
   const [reactions, setReactions] = useState({});
   const [showQuestion, setShowQuestion] = useState(false);
   const { background } = useBackground();
+  const location = useLocation()
+  const navigate = useNavigate()
 
   const [videoKey, setVideoKey] = useState(0); // Add this line
   const videoRef = useRef(null);
@@ -124,6 +127,12 @@ export default function Cats() {
       className="flex items-center justify-center w-screen h-screen relative"
       style={backgroundStyle}
     >
+      <button
+        onClick={() => navigate(location.state?.from, {state: {goToLastSlide: location.state?.goToLastSlide}})}
+        className="absolute top-6 left-6 z-50 bg-white bg-opacity-75 hover:bg-opacity-100 text-black text-xl font-bold px-3 py-1 rounded shadow cursor-pointer"
+      >
+        ← Back
+      </button>
       {/* Meter Bars */}
       <div className="absolute top-6 right-30 flex flex-col items-center gap-2">
         <div className="flex gap-2">
