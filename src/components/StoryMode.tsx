@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import robotImage from "../assets/robot.png";
+import robotImage from "../assets/robot.webp";
 import { FaArrowRight, FaUndoAlt } from "react-icons/fa";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useBackground } from "../context/BackgroundContext";

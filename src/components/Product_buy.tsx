@@ -7,22 +7,22 @@ const slides = [
       "I am always watching you, through you location, search history, you voice any many more ways and your this data can be used to sell you products which you may not need.",
   },
   {
-    media: "/tracking.png",
+    media: "/tracking.webp",
     narration:
       "Alex and his friend is talking about a shoe, and I seceretly listing and tracking them.",
   },
   {
-    media: "/tracking2.png",
+    media: "/tracking2.webp",
     narration:
       "and now I am showing him same shoe with exciting offer, and monitoring his response whether he may bought it or not.",
   },
   {
-    media: "/tracking3.png",
+    media: "/tracking3.webp",
     narration:
       "I esclated the situation and forced him to impulse buy the shoe",
   },
   {
-    media: "/tracking4.png",
+    media: "/tracking4.webp",
     narration:
       "I am not evil but the companies they just use me for their profit.",
   },
@@ -99,7 +99,7 @@ const Product_buy = () => {
       quizzes={quizzes}
       nextPage="/emotion"
       redirect="/product_buy"
-      background_img="/background4.png"
+      background_img="/background4.webp"
       fun_link="/game/ad"
     />
   );

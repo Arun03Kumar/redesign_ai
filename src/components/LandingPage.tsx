@@ -35,7 +35,7 @@ const LandingPage = () => {
       <div className="flex-1 flex items-center justify-center">
         {isSlid ? (
           <img
-            src="/red_robo.png"
+            src="/red_robo.webp"
             alt="Red Robo"
             className="w-full h-full max-h-[80vh] object-cover rounded-xl transition-all duration-500"
           />

@@ -9,7 +9,7 @@ const slides = [
       color_to: "#FFF"
   },
   {
-    media: "/explore.png",
+    media: "/explore.webp",
     narration: "Sure, I could show him tutorials, inventions, or cool facts.",
      color_from: "#F4FFFF",
       color_to: "#D2847D"
@@ -29,7 +29,7 @@ const slides = [
       color_to: "#4E92AE"
   },
   {
-    media: "/outside_world.png",
+    media: "/outside_world.webp",
     narration:
       "you can see there's a lot to learn and more fun in outside world but I'll make sure that you won't come out of filter bubble because you are my fuel",
        color_from: "#F8DBA3",
@@ -129,7 +129,7 @@ const Filter_bubble = () => {
       quizzes={quizzes}
       nextPage="/product_buy"
       redirect="/filter_bubble"
-      background_img="/background3.png"
+      background_img="/background3.webp"
       fun_link="/game/filter_bubble"
     />
   );
