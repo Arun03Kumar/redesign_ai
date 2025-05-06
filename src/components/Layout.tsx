@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from "react";
-import { useLocation } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
 import { useBackground } from "../context/BackgroundContext";
 
 const Layout = ({ children }: any) => {
-  const location = useLocation();
-  const hideFab = ["/", "/interactive-app-mode"];
+  // const location = useLocation();
+  // const hideFab = ["/", "/interactive-app-mode"];
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [currentPos, setCurrentPos] = useState({ x: 0, y: 0 });
+  const [_, setCurrentPos] = useState({ x: 0, y: 0 });
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -19,7 +19,7 @@ const Layout = ({ children }: any) => {
   ? { background: `linear-gradient(to bottom right, ${background.from}, ${background.to})` }
   : { backgroundImage: `url(${background.url})`, backgroundSize: 'cover', backgroundPosition: 'center' };
 
-  const showFab = !hideFab.includes(location.pathname);
+  // const showFab = !hideFab.includes(location.pathname);
 
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { useBackground } from "../../context/BackgroundContext";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -56,15 +56,15 @@ export default function Cats() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [likeMeter, setLikeMeter] = useState(0);
   const [dislikeMeter, setDislikeMeter] = useState(0);
-  const [answers, setAnswers] = useState({});
-  const [reactions, setReactions] = useState({});
+  const [answers, setAnswers] = useState<any>({});
+  const [reactions, setReactions] = useState<any>({});
   const [showQuestion, setShowQuestion] = useState(false);
   const { background } = useBackground();
   const location = useLocation()
   const navigate = useNavigate()
 
   const [videoKey, setVideoKey] = useState(0); // Add this line
-  const videoRef = useRef(null);
+  const videoRef = useRef<any>(null);
 
   const getReels = () => (likesCats ? reelsNo : reelsYes);
   const currentReel = getReels()[currentIndex];
@@ -80,12 +80,12 @@ export default function Cats() {
           backgroundPosition: "center",
         };
 
-  const handleInitialAnswer = (ans) => {
+  const handleInitialAnswer = (ans:any) => {
     setLikesCats(ans);
     setQuestionAnswered(true);
   };
 
-  const handleFinalAnswer = (choice) => {
+  const handleFinalAnswer = (choice:any) => {
     if (answers[currentIndex]) return;
 
     const isPositive = choice === currentReel.expectedAnswer;
@@ -102,7 +102,7 @@ export default function Cats() {
     // }, 500);
   };
 
-  const handleReaction = (reaction) => {
+  const handleReaction = (reaction:any) => {
     const currentReaction = reactions[currentIndex];
     if (currentReaction === reaction) return;
 
@@ -195,9 +195,9 @@ export default function Cats() {
                     className="w-full h-full object-cover"
                     onEnded={() => {
                       if (!answers[currentIndex]) setShowQuestion(true);
-                      else if (videoRef.current) {
+                      else if (videoRef?.current) {
                         videoRef.current.currentTime = 0;
-                        videoRef.current.play();
+                        videoRef?.current?.play();
                       }
                     }}
                   />

@@ -265,7 +265,7 @@ function DropPhone({
   const phoneRef = useRef<any>(null);
   const [, drop] = useDrop({
     accept: ItemTypes.COMPONENT,
-    drop: (item, mon) => {
+    drop: (item:any, mon) => {
       const offset: any = mon.getSourceClientOffset();
       const rect = phoneRef.current.getBoundingClientRect();
       const x = offset.x - rect.left,
@@ -283,7 +283,7 @@ function DropPhone({
     >
       <div className="absolute top-2 left-1/2 transform -translate-x-1/2 h-4 w-24 bg-gray-300 rounded-full"></div>
       <div ref={drop} className="absolute inset-0">
-        {items.map((i) => (
+        {items.map((i:any) => (
           <DraggablePlacedItem
             key={i.uuid}
             item={i}

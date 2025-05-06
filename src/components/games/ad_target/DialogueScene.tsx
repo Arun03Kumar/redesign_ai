@@ -23,7 +23,7 @@
     export default function DialogueScene() {
     const [index, setIndex] = useState(0);
     const [displayedText, setDisplayedText] = useState("");
-    const [chat, setChat] = useState([]);
+    const [chat, setChat] = useState<any>([]);
     const [showNext, setShowNext] = useState(false);
     const [isTyping, setIsTyping] = useState(false);
     const navigate = useNavigate();
@@ -40,7 +40,7 @@
         { id: 4, text: "An ad for winter snow boots" },
     ];
 
-    const handleOptionSelect = (optionId) => {
+    const handleOptionSelect = (optionId:any) => {
         setSelectedOption(optionId);
 
         if (optionId === 3) {
@@ -73,7 +73,7 @@
         }
 
         if (cancelled) return;
-        setChat((prev) => [...prev, current]);
+        setChat((prev:any) => [...prev, current]);
         setIsTyping(false); // Stop typing after adding to chat
 
         await new Promise((r) => setTimeout(r, 800));
@@ -117,7 +117,7 @@
         </div>
     );
 
-    const Bubble = ({ text, speaker, typing }) => (
+    const Bubble = ({ text, speaker, typing }:any) => (
         <div
         className={`px-4 py-2 rounded-2xl max-w-[40%] border-2 ${
             speaker === "left"
@@ -152,7 +152,7 @@
                             overflow-auto h-[80vh]"
             >
             {/* Render past messages */}
-            {chat.map((msg, i) => (
+            {chat.map((msg:any, i:any) => (
                 <div key={i} className="w-full flex items-start">
                 {msg.speaker === "left" ? (
                     <>
@@ -256,7 +256,7 @@
             )}
         </div>
 
-        <style jsx>{`
+        {/* <style jsx>{`
             @keyframes blink {
             50% {
                 opacity: 0;
@@ -265,7 +265,7 @@
             .animate-blink {
             animation: blink 1s step-end infinite;
             }
-        `}</style>
+        `}</style> */}
         </div>
     );
     }

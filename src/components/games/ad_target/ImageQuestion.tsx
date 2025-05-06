@@ -19,7 +19,7 @@ export default function ImageQuestion() {
   const nav = useNavigate();
   const location = useLocation()
 
-  const handleOptionSelect = (optionId) => {
+  const handleOptionSelect = (optionId:any) => {
     setSelectedOption(optionId);
 
     if (optionId === 1) {
