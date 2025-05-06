@@ -6,7 +6,7 @@ const BackgroundContext = createContext<any>(null);
 export const BackgroundProvider = ({ children }: any) => {
   const [background, setBackground] = useState({
     type: "image",
-    url: "/background3.png"
+    url: "/background3.webp"
   });
 
   return (
