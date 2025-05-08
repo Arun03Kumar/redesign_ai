@@ -2,34 +2,34 @@ import StoryMode from "./StoryMode";
 
 const slides = [
   {
-    media: "/happy_alex.mp4",
+    media: "src/assets/story_module/story2/happy_alex.mp4",
     narration:
       "My job is to keep you happy. That's it. If you like cats and BGMI, I’ll make sure that’s all you see.",
       color_from: "#FFF",
       color_to: "#FFF"
   },
   {
-    media: "/explore.webp",
+    media: "src/assets/story_module/story2/explore.webp",
     narration: "Sure, I could show him tutorials, inventions, or cool facts.",
      color_from: "#F4FFFF",
       color_to: "#D2847D"
   },
   {
-    media: "/hook.mp4",
+    media: "src/assets/story_module/story2/hook.mp4",
     narration:
       "But I only showing him what he likes so he spents more time with me.",
        color_from: "#F8DBA3",
       color_to: "#4E92AE"
   },
   {
-    media: "/bubble.mp4",
+    media: "src/assets/story_module/story2/bubble.mp4",
     narration:
       "This is called filter bubble, so he can only see what's inside the bubble",
        color_from: "#F8DBA3",
       color_to: "#4E92AE"
   },
   {
-    media: "/outside_world.webp",
+    media: "src/assets/story_module/story2/outside_world.webp",
     narration:
       "you can see there's a lot to learn and more fun in outside world but I'll make sure that you won't come out of filter bubble because you are my fuel",
        color_from: "#F8DBA3",
@@ -129,7 +129,7 @@ const Filter_bubble = () => {
       quizzes={quizzes}
       nextPage="/product_buy"
       redirect="/filter_bubble"
-      background_img="/background3.webp"
+      background_img="src/assets/background3.webp"
       fun_link="/game/filter_bubble"
     />
   );

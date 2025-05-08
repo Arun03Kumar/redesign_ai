@@ -5,31 +5,31 @@ import { useLocation, useNavigate } from "react-router-dom";
 const reelsNo = [
   {
     type: "video",
-    src: "/cats_annoying/cats_annoying1.mp4",
+    src: "/ai_manipulation/cats_annoying/cats_annoying1.webm",
     question: "Was this annoying?",
     expectedAnswer: "no",
   },
   {
     type: "video",
-    src: "/cats_annoying/cats_annoying2.webm",
+    src: "/ai_manipulation/cats_annoying/cats_annoying2.webm",
     question: "Would this cat drive you crazy?",
     expectedAnswer: "no",
   },
   {
     type: "video",
-    src: "/cats_annoying/cats_annoying3.mp4",
+    src: "/ai_manipulation/cats_annoying/cats_annoying3.webm",
     question: "Was this cat over the top?",
     expectedAnswer: "no",
   },
   {
     type: "video",
-    src: "/cats_annoying/cats_annoying4.mp4",
+    src: "/ai_manipulation/cats_annoying/cats_annoying4.webm",
     question: "Would you adopt this troublemaker?",
     expectedAnswer: "yes",
   },
   {
     type: "video",
-    src: "/cats_annoying/cats_annoying5.mp4",
+    src: "/ai_manipulation/cats_annoying/cats_annoying5.webm",
     question: "Was this the most annoying one yet?",
     expectedAnswer: "no",
   },
@@ -38,31 +38,31 @@ const reelsNo = [
 const reelsYes = [
   {
     type: "video",
-    src: "/cats_cute/cute1.mp4",
+    src: "/ai_manipulation/cats_cute/cute1.webm",
     question: "Did you like this cat?",
     expectedAnswer: "yes",
   },
   {
     type: "video",
-    src: "/cats_cute/cute2.mp4",
+    src: "/ai_manipulation/cats_cute/cute2.webm",
     question: "Did this adorable cat make you smile?",
     expectedAnswer: "yes",
   },
   {
     type: "video",
-    src: "/cats_cute/cute3.mp4",
+    src: "/ai_manipulation/cats_cute/cute3.webm",
     question: "Would you cuddle this cat if it sat on your lap?",
     expectedAnswer: "yes",
   },
   {
     type: "video",
-    src: "/cats_cute/cute4.mp4",
+    src: "/ai_manipulation/cats_cute/cute4.webm",
     question: "Is this the kind of cat you'd love to take home?",
     expectedAnswer: "yes",
   },
   {
     type: "video",
-    src: "/cats_cute/cute5.mp4",
+    src: "/ai_manipulation/cats_cute/cute5.webm",
     question: "Did this cat melt your heart a little?",
     expectedAnswer: "yes",
   },

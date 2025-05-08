@@ -2,49 +2,49 @@ import StoryMode from "./StoryMode";
 
 const slides = [
   {
-    media: "/boy.mp4",
+    media: "src/assets/story_module/story1/boy.mp4",
     narration:
       "This is Alex, just like you, scrolling and using phone all day.",
     color_from: "white",
     color_to: "white"
   },
   {
-    media: "/boy_dont_like_cat.mp4",
+    media: "src/assets/story_module/story1/boy_dont_like_cat.mp4",
     narration:
       "At first, Alex didn’t like cats. He barely noticed one walk by, uninterested, his mind set. But I saw an opportunity.",
       color_from: "#FFEBC7",
     color_to: "#FFEBC7"
   },
   {
-    media: "/boy_3.webp",
+    media: "src/assets/story_module/story1/boy_3.webp",
     narration:
       "So I showed him a video — just one. A funny little cat doing silly things. Nothing serious… just planting a seed. At first I didn't get much response from him",
       color_from: "#F8DBA3",
     color_to: "#F8DBA3"
   },
   {
-    media: "/boy_4.webp",
+    media: "src/assets/story_module/story1/boy_4.webp",
     narration:
       "but It made him smile. That tiny shift — that little 'like' — was all I needed. A nudge, so gentle he didn’t even notice",
       color_from: "#F8DBA3",
     color_to: "#F8DBA3"
   },
   {
-    media: "/boy_5.webp",
+    media: "src/assets/story_module/story1/boy_5.webp",
     narration:
       "Then I gave him more. Laughter followed. He thought it was his idea to keep watching. It wasn't.",
       color_from: "#F8DBA3",
     color_to: "#F8DBA3"
   },
   {
-    media: "/boy_6.webp",
+    media: "src/assets/story_module/story1/boy_6.webp",
     narration:
       "By the time I showed my true form, he was already mine. I didn’t change his mind. I guided it. Subtly. Precisely.",
       color_from: "#F8DBA3",
     color_to: "#F8DBA3"
   },
   {
-    media: "/boy_7.webp",
+    media: "src/assets/story_module/story1/boy_7.webp",
     narration:
       "Now look at him. Petting the cat he once ignored. That’s the power of influence. That's the power of me. And if I could change him... just imagine what I can do to you.",
       color_from: "#F8DBA3",
@@ -135,7 +135,7 @@ const HowPage = () => {
       quizzes={quizzes}
       nextPage="/filter_bubble"
       redirect="/how"
-      background_img="/background4.webp"
+      background_img="src/assets/background4.webp"
       fun_link="/game/cats"
     />
   );

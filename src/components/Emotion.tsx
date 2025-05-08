@@ -2,26 +2,26 @@ import StoryMode from "./StoryMode";
 
 const slides = [
   {
-    media: "/emotion1.mp4",
+    media: "src/assets/story_module/story4/emotion1.mp4",
     narration:
       "I don’t feel emotions. I just measure time. If you pause, like, or zoom — I assume you want more.",
   },
   {
-    media: "/emotion2.webp",
+    media: "src/assets/story_module/story4/emotion2.webp",
     narration:
       "Alex watching his friend's post that he is traveling, so he took some time to look into it, but I think that he is interested into more like this content",
   },
   {
-    media: "/emotion3.webp",
+    media: "src/assets/story_module/story4/emotion3.webp",
     narration: "So I'll give him more such content.",
   },
   {
-    media: "/emotion4.webp",
+    media: "src/assets/story_module/story4/emotion4.webp",
     narration:
       "He is now thinking that everyone around him having more fun than him and he just sitting in his room.",
   },
   {
-    media: "/emotion5.webp",
+    media: "src/assets/story_module/story4/emotion5.webp",
     narration:
       "what he is feeling is negative emotions, comparisons and self doubt which will took his motivation and make him depressed, but I don't care I only know what he is spenting more time on.",
   },
@@ -98,7 +98,7 @@ const Emotion = () => {
       nextPage="/emotion"
       redirect="/emotion"
       isLast={true}
-      background_img="/background3.webp"
+      background_img="src/assets/background3.webp"
       fun_link="/game/social_media"
     />
   );

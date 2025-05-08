@@ -35,9 +35,10 @@ const LandingPage = () => {
       <div className="flex-1 flex items-center justify-center">
         {isSlid ? (
           <img
-            src="/red_robo.webp"
+            src="src/assets/red_robo.webp"
             alt="Red Robo"
             className="w-full h-full max-h-[80vh] object-cover rounded-xl transition-all duration-500"
+            loading="lazy"
           />
         ) : (
           <video
@@ -48,7 +49,7 @@ const LandingPage = () => {
             className="w-full h-full object-cover rounded-xl transition-all duration-500"
             poster="/video-poster.jpg"
           >
-            <source src="/intro.mp4" type="video/mp4" />
+            <source src="src/assets/intro.mp4" type="video/mp4" />
           </video>
         )}
       </div>

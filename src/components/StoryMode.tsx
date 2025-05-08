@@ -95,6 +95,7 @@ const StoryMode = ({
           className="w-3/5 h-full max-h-[80vh] object-cover rounded-xl"
           src={slides[currentSlide].media}
           alt={`Slide ${currentSlide}`}
+          loading="lazy"
         />
       )}
 
@@ -104,6 +105,7 @@ const StoryMode = ({
             src={robotImage}
             alt="Robot Narrator"
             className="w-30 h-30 object-cover rounded-full mb-4"
+            loading="lazy"
           />
           <div className=" text-black font-bold p-4 rounded-lg shadow-md border text-xl">
             {/* <p>{slides[currentSlide].narration}</p> */}

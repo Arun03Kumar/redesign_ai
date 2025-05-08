@@ -65,7 +65,7 @@ export default function ImageQuestion() {
         </h2>
         <div className="mb-8">
           <img
-            src="/guitar.jpg"
+            src="src/assets/interactive_module/ad_crafter/guitar.webp"
             alt="person with guitar"
             className="max-w-full h-auto rounded-xl shadow-lg"
             style={{ maxWidth: "500px" }}
