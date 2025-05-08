@@ -22,7 +22,7 @@ export default function InteractiveModePage() {
     >
       {/* Top-left Back Button */}
       <button
-        onClick={() => navigate(-1)}
+        onClick={() => navigate("/")}
         className="absolute top-4 left-4 bg-blue-800 hover:bg-cyan text-white font-bold py-2 px-4 rounded shadow-lg transition-all hover:scale-105"
       >
         ⬅️ Back
