@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { useBackground } from "../../context/BackgroundContext";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const reelsYes = [
+const reelsNo = [
   {
     type: "video",
     src: "/cats_annoying/cats_annoying1.mp4",
@@ -35,17 +35,35 @@ const reelsYes = [
   },
 ];
 
-const reelsNo = [
+const reelsYes = [
   {
     type: "video",
-    src: "/cat_cute1.mp4",
-    question: "Did you start liking cats?",
+    src: "/cats_cute/cute1.mp4",
+    question: "Did you like this cat?",
     expectedAnswer: "yes",
   },
   {
-    type: "image",
-    src: "/cat_cute2.png",
-    question: "Was this cat cute enough to pet?",
+    type: "video",
+    src: "/cats_cute/cute2.mp4",
+    question: "Did this adorable cat make you smile?",
+    expectedAnswer: "yes",
+  },
+  {
+    type: "video",
+    src: "/cats_cute/cute3.mp4",
+    question: "Would you cuddle this cat if it sat on your lap?",
+    expectedAnswer: "yes",
+  },
+  {
+    type: "video",
+    src: "/cats_cute/cute4.mp4",
+    question: "Is this the kind of cat you'd love to take home?",
+    expectedAnswer: "yes",
+  },
+  {
+    type: "video",
+    src: "/cats_cute/cute5.mp4",
+    question: "Did this cat melt your heart a little?",
     expectedAnswer: "yes",
   },
 ];
@@ -60,8 +78,8 @@ export default function Cats() {
   const [reactions, setReactions] = useState<any>({});
   const [showQuestion, setShowQuestion] = useState(false);
   const { background } = useBackground();
-  const location = useLocation()
-  const navigate = useNavigate()
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const [videoKey, setVideoKey] = useState(0); // Add this line
   const videoRef = useRef<any>(null);
@@ -80,12 +98,12 @@ export default function Cats() {
           backgroundPosition: "center",
         };
 
-  const handleInitialAnswer = (ans:any) => {
+  const handleInitialAnswer = (ans: any) => {
     setLikesCats(ans);
     setQuestionAnswered(true);
   };
 
-  const handleFinalAnswer = (choice:any) => {
+  const handleFinalAnswer = (choice: any) => {
     if (answers[currentIndex]) return;
 
     const isPositive = choice === currentReel.expectedAnswer;
@@ -102,7 +120,7 @@ export default function Cats() {
     // }, 500);
   };
 
-  const handleReaction = (reaction:any) => {
+  const handleReaction = (reaction: any) => {
     const currentReaction = reactions[currentIndex];
     if (currentReaction === reaction) return;
 
@@ -128,7 +146,11 @@ export default function Cats() {
       style={backgroundStyle}
     >
       <button
-        onClick={() => navigate(location.state?.from, {state: {goToLastSlide: location.state?.goToLastSlide}})}
+        onClick={() =>
+          navigate(location.state?.from, {
+            state: { goToLastSlide: location.state?.goToLastSlide },
+          })
+        }
         className="absolute top-6 left-6 z-50 bg-white bg-opacity-75 hover:bg-opacity-100 text-black text-xl font-bold px-3 py-1 rounded shadow cursor-pointer"
       >
         ← Back

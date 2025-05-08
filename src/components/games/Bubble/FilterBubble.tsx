@@ -96,8 +96,8 @@ function FilterBubble() {
   const [floatingButtons, setFloatingButtons] = useState<any[]>([]);
   const [animatedIn, setAnimatedIn] = useState<any[]>([]);
   const [showModal, setShowModal] = useState(false);
-  const navigate = useNavigate()
-  const location = useLocation()
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const bubbleSize = 350;
@@ -207,7 +207,7 @@ function FilterBubble() {
           <motion.button
             key={btn.id}
             onClick={(e) => handleClick(btn.topic, e)}
-            className="absolute px-4 py-2 rounded-full text-sm font-bold bg-cyan-400 text-white shadow-md hover:scale-105 transition-transform"
+            className="absolute px-4 py-2 rounded-full text-sm font-bold bg-cyan-400 text-white shadow-md hover:scale-105 transition-transform cursor-pointer"
             initial={{ x: btn.x, y: btn.y }}
             animate={{
               x: btn.x + Math.random() * 20 - 10,
@@ -251,7 +251,7 @@ function FilterBubble() {
       <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-30">
         <button
           onClick={() => setShowModal(true)}
-          className="bg-green-500 text-white text-xl px-6 py-3 rounded-full shadow-lg hover:bg-green-600 transition"
+          className="bg-blue-900 text-white text-xl px-6 py-3 rounded-full shadow-lg hover:bg-blue-600 transition"
         >
           I'm Done! → 🎉
         </button>
@@ -285,7 +285,11 @@ function FilterBubble() {
 
             <div className="flex justify-center gap-4">
               <button
-                onClick={() => navigate(location.state?.from, {state: {goToLastSlide: location.state?.goToLastSlide}})}
+                onClick={() =>
+                  navigate(location.state?.from, {
+                    state: { goToLastSlide: location.state?.goToLastSlide },
+                  })
+                }
                 className="bg-green-500 hover:bg-green-600 text-white px-5 py-2 rounded-lg shadow-md"
               >
                 OK, Continue →
