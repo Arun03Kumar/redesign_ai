@@ -3,6 +3,9 @@ import { FaPlay, FaPause } from "react-icons/fa";
 import { HiArrowNarrowRight, HiArrowNarrowLeft } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 
+import redrobo from "../assets/red_robo.webp"
+import introVid from "../assets/intro.mp4"
+
 const LandingPage = () => {
   const navigate = useNavigate();
   const [isPlaying, setIsPlaying] = useState(true);
@@ -35,7 +38,7 @@ const LandingPage = () => {
       <div className="flex-1 flex items-center justify-center">
         {isSlid ? (
           <img
-            src="src/assets/red_robo.webp"
+            src={redrobo}
             alt="Red Robo"
             className="w-full h-full max-h-[80vh] object-cover rounded-xl transition-all duration-500"
             loading="lazy"
@@ -49,7 +52,7 @@ const LandingPage = () => {
             className="w-full h-full object-cover rounded-xl transition-all duration-500"
             poster="/video-poster.jpg"
           >
-            <source src="src/assets/intro.mp4" type="video/mp4" />
+            <source src={introVid} type="video/mp4" />
           </video>
         )}
       </div>

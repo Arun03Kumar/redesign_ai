@@ -1,28 +1,41 @@
 import StoryMode from "./StoryMode";
 
+import vid1 from "../assets/story_module/story3/location_tracking.mp4"
+import img1 from "../assets/story_module/story3/tracking.webp"
+import img2 from "../assets/story_module/story3/tracking2.webp"
+import img3 from "../assets/story_module/story3/tracking3.webp"
+import img4 from "../assets/story_module/story3/tracking4.webp"
+
+import backgroundImg from "../assets/background4.webp"
+
 const slides = [
   {
-    media: "src/assets/story_module/story3/location_tracking.mp4",
+    media: vid1,
+    type: "video",
     narration:
       "I am always watching you, through you location, search history, you voice any many more ways and your this data can be used to sell you products which you may not need.",
   },
   {
-    media: "src/assets/story_module/story3/tracking.webp",
+    media: img1,
+    type: "image",
     narration:
       "Alex and his friend is talking about a shoe, and I seceretly listing and tracking them.",
   },
   {
-    media: "src/assets/story_module/story3/tracking2.webp",
+    media: img2,
+    type: "image",
     narration:
       "and now I am showing him same shoe with exciting offer, and monitoring his response whether he may bought it or not.",
   },
   {
-    media: "src/assets/story_module/story3/tracking3.webp",
+    media: img3,
+    type: "image",
     narration:
       "I esclated the situation and forced him to impulse buy the shoe",
   },
   {
-    media: "src/assets/story_module/story3/tracking4.webp",
+    media: img4,
+    type: "image",
     narration:
       "I am not evil but the companies they just use me for their profit.",
   },
@@ -99,7 +112,7 @@ const Product_buy = () => {
       quizzes={quizzes}
       nextPage="/emotion"
       redirect="/product_buy"
-      background_img="src/assets/background4.webp"
+      background_img={backgroundImg}
       fun_link="/game/ad"
     />
   );

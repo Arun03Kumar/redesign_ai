@@ -1,50 +1,66 @@
 import StoryMode from "./StoryMode";
+import vid1 from "../assets/story_module/story1/boy.mp4"
+import vid2 from "../assets/story_module/story1/boy_dont_like_cat.mp4"
+import img1 from "../assets/story_module/story1/boy_3.webp"
+import img2 from "../assets/story_module/story1/boy_4.webp"
+import img3 from "../assets/story_module/story1/boy_5.webp"
+import img4 from "../assets/story_module/story1/boy_6.webp"
+import img5 from "../assets/story_module/story1/boy_7.webp"
+
+import backgroundImg from "../assets/background4.webp"
 
 const slides = [
   {
-    media: "src/assets/story_module/story1/boy.mp4",
+    media: vid1,
+    type: "video",
     narration:
       "This is Alex, just like you, scrolling and using phone all day.",
     color_from: "white",
     color_to: "white"
   },
   {
-    media: "src/assets/story_module/story1/boy_dont_like_cat.mp4",
+    media: vid2,
+    type: "video",
     narration:
       "At first, Alex didn’t like cats. He barely noticed one walk by, uninterested, his mind set. But I saw an opportunity.",
       color_from: "#FFEBC7",
     color_to: "#FFEBC7"
   },
   {
-    media: "src/assets/story_module/story1/boy_3.webp",
+    media: img1,
+    type: "image",
     narration:
       "So I showed him a video — just one. A funny little cat doing silly things. Nothing serious… just planting a seed. At first I didn't get much response from him",
       color_from: "#F8DBA3",
     color_to: "#F8DBA3"
   },
   {
-    media: "src/assets/story_module/story1/boy_4.webp",
+    media: img2,
+    type: "image",
     narration:
       "but It made him smile. That tiny shift — that little 'like' — was all I needed. A nudge, so gentle he didn’t even notice",
       color_from: "#F8DBA3",
     color_to: "#F8DBA3"
   },
   {
-    media: "src/assets/story_module/story1/boy_5.webp",
+    media: img3,
+    type: "image",
     narration:
       "Then I gave him more. Laughter followed. He thought it was his idea to keep watching. It wasn't.",
       color_from: "#F8DBA3",
     color_to: "#F8DBA3"
   },
   {
-    media: "src/assets/story_module/story1/boy_6.webp",
+    media: img4,
+    type: "image",
     narration:
       "By the time I showed my true form, he was already mine. I didn’t change his mind. I guided it. Subtly. Precisely.",
       color_from: "#F8DBA3",
     color_to: "#F8DBA3"
   },
   {
-    media: "src/assets/story_module/story1/boy_7.webp",
+    media: img5,
+    type: "image",
     narration:
       "Now look at him. Petting the cat he once ignored. That’s the power of influence. That's the power of me. And if I could change him... just imagine what I can do to you.",
       color_from: "#F8DBA3",
@@ -135,7 +151,7 @@ const HowPage = () => {
       quizzes={quizzes}
       nextPage="/filter_bubble"
       redirect="/how"
-      background_img="src/assets/background4.webp"
+      background_img={backgroundImg}
       fun_link="/game/cats"
     />
   );

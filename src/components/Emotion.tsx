@@ -1,27 +1,39 @@
 import StoryMode from "./StoryMode";
+import vid1 from "../assets/story_module/story4/emotion1.mp4"
+import img1 from "../assets/story_module/story4/emotion2.webp"
+import img2 from "../assets/story_module/story4/emotion3.webp"
+import img3 from "../assets/story_module/story4/emotion4.webp"
+import img4 from "../assets/story_module/story4/emotion5.webp"
+
+import backgroundImg from "../assets/background3.webp"
 
 const slides = [
   {
-    media: "src/assets/story_module/story4/emotion1.mp4",
+    media: vid1,
+    type: "video",
     narration:
       "I don’t feel emotions. I just measure time. If you pause, like, or zoom — I assume you want more.",
   },
   {
-    media: "src/assets/story_module/story4/emotion2.webp",
+    media: img1,
+    type: "image",
     narration:
       "Alex watching his friend's post that he is traveling, so he took some time to look into it, but I think that he is interested into more like this content",
   },
   {
-    media: "src/assets/story_module/story4/emotion3.webp",
+    media: img2,
+    type: "image",
     narration: "So I'll give him more such content.",
   },
   {
-    media: "src/assets/story_module/story4/emotion4.webp",
+    media: img3,
+    type: "image",
     narration:
       "He is now thinking that everyone around him having more fun than him and he just sitting in his room.",
   },
   {
-    media: "src/assets/story_module/story4/emotion5.webp",
+    media: img4,
+    type: "image",
     narration:
       "what he is feeling is negative emotions, comparisons and self doubt which will took his motivation and make him depressed, but I don't care I only know what he is spenting more time on.",
   },
@@ -98,7 +110,7 @@ const Emotion = () => {
       nextPage="/emotion"
       redirect="/emotion"
       isLast={true}
-      background_img="src/assets/background3.webp"
+      background_img={backgroundImg}
       fun_link="/game/social_media"
     />
   );

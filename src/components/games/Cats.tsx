@@ -2,34 +2,46 @@ import { useState, useRef } from "react";
 import { useBackground } from "../../context/BackgroundContext";
 import { useLocation, useNavigate } from "react-router-dom";
 
+import cute1 from "/ai_manipulation/cats_cute/cute1.webm"
+import cute2 from "/ai_manipulation/cats_cute/cute2.webm"
+import cute3 from "/ai_manipulation/cats_cute/cute3.webm"
+import cute4 from "/ai_manipulation/cats_cute/cute4.webm"
+import cute5 from "/ai_manipulation/cats_cute/cute5.webm"
+
+import annoying1 from "/ai_manipulation/cats_annoying/cats_annoying1.webm"
+import annoying2 from "/ai_manipulation/cats_annoying/cats_annoying2.webm"
+import annoying3 from "/ai_manipulation/cats_annoying/cats_annoying3.webm"
+import annoying4 from "/ai_manipulation/cats_annoying/cats_annoying4.webm"
+import annoying5 from "/ai_manipulation/cats_annoying/cats_annoying5.webm"
+
 const reelsNo = [
   {
     type: "video",
-    src: "/ai_manipulation/cats_annoying/cats_annoying1.webm",
+    src: annoying1,
     question: "Was this annoying?",
     expectedAnswer: "no",
   },
   {
     type: "video",
-    src: "/ai_manipulation/cats_annoying/cats_annoying2.webm",
+    src: annoying2,
     question: "Would this cat drive you crazy?",
     expectedAnswer: "no",
   },
   {
     type: "video",
-    src: "/ai_manipulation/cats_annoying/cats_annoying3.webm",
+    src: annoying3,
     question: "Was this cat over the top?",
     expectedAnswer: "no",
   },
   {
     type: "video",
-    src: "/ai_manipulation/cats_annoying/cats_annoying4.webm",
+    src: annoying4,
     question: "Would you adopt this troublemaker?",
     expectedAnswer: "yes",
   },
   {
     type: "video",
-    src: "/ai_manipulation/cats_annoying/cats_annoying5.webm",
+    src: annoying5,
     question: "Was this the most annoying one yet?",
     expectedAnswer: "no",
   },
@@ -38,31 +50,31 @@ const reelsNo = [
 const reelsYes = [
   {
     type: "video",
-    src: "/ai_manipulation/cats_cute/cute1.webm",
+    src: cute1,
     question: "Did you like this cat?",
     expectedAnswer: "yes",
   },
   {
     type: "video",
-    src: "/ai_manipulation/cats_cute/cute2.webm",
+    src: cute2,
     question: "Did this adorable cat make you smile?",
     expectedAnswer: "yes",
   },
   {
     type: "video",
-    src: "/ai_manipulation/cats_cute/cute3.webm",
+    src: cute3,
     question: "Would you cuddle this cat if it sat on your lap?",
     expectedAnswer: "yes",
   },
   {
     type: "video",
-    src: "/ai_manipulation/cats_cute/cute4.webm",
+    src: cute4,
     question: "Is this the kind of cat you'd love to take home?",
     expectedAnswer: "yes",
   },
   {
     type: "video",
-    src: "/ai_manipulation/cats_cute/cute5.webm",
+    src: cute5,
     question: "Did this cat melt your heart a little?",
     expectedAnswer: "yes",
   },

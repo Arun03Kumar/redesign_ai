@@ -2,6 +2,8 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
+import guitarImg from "../../../assets/interactive_module/ad_crafter/guitar.webp"
+
 const imageOptions = [
   { id: 1, text: "An ad for acoustic guitars" },
   { id: 2, text: "An ad for hiking backpacks" },
@@ -65,7 +67,7 @@ export default function ImageQuestion() {
         </h2>
         <div className="mb-8">
           <img
-            src="src/assets/interactive_module/ad_crafter/guitar.webp"
+            src={guitarImg}
             alt="person with guitar"
             className="max-w-full h-auto rounded-xl shadow-lg"
             style={{ maxWidth: "500px" }}

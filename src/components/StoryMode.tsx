@@ -49,7 +49,8 @@ const StoryMode = ({
     }
   }, [location.state]);
 
-  const isVideo = slides[currentSlide].media.endsWith(".mp4");
+  // const isVideo = slides[currentSlide].media.endsWith(".mp4");
+  const isVideo = slides[currentSlide].type === "video";
   const isLastSlide = currentSlide === slides.length - 1;
 
   useEffect(() => {
